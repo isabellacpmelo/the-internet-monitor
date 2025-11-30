@@ -40,7 +40,7 @@ export function useDatasetCsv(filePath: string) {
             setData(result.data as InternetData[])
             setError(null)
           },
-          error: (error) => {
+          error: (error: { message: string }) => {
             setError(`Error passing csv file: ${error.message}`)
           },
         })
