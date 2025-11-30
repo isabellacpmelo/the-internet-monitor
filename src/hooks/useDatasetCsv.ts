@@ -1,0 +1,62 @@
+import { useEffect, useState } from 'react'
+import Papa from 'papaparse'
+
+export interface InternetData {
+  ID: string
+  Download: number
+  Upload: number
+  Dependencia_Adm: string
+  Localizacao: string
+  Tipo_Tecnologia: string
+}
+
+export function useDatasetCsv(filePath: string) {
+  const [data, setData] = useState<InternetData[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchAndParseCsv = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch(filePath)
+        console.log(response)
+        const csvText = await response.text()
+        console.log(csvText)
+
+        Papa.parse(csvText, {
+          header: true,
+          skipEmptyLines: true,
+          dynamicTyping: {
+            Download: true,
+            Upload: true,
+          },
+          complete: (result) => {
+            if (result.errors.length > 0) {
+              setError('Error processing csv file.')
+              return
+            }
+
+            setData(result.data as InternetData[])
+            setError(null)
+          },
+          error: (error) => {
+            setError(`Error passing csv file: ${error.message}`)
+          },
+        })
+      } catch (err) {
+        setError(
+          `Error loading the file: ${
+            err instanceof Error ? err.message : 'Unknown'
+          }`
+        )
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchAndParseCsv()
+  }, [filePath])
+
+  return { data, loading, error }
+}
