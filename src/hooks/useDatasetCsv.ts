@@ -20,9 +20,10 @@ export function useDatasetCsv(filePath: string) {
       try {
         setLoading(true)
         const response = await fetch(filePath)
-        console.log(response)
+        if (!response.ok) {
+          throw new Error(`HTTP error: ${response.status}`)
+        }
         const csvText = await response.text()
-        console.log(csvText)
 
         Papa.parse(csvText, {
           header: true,
