@@ -1,4 +1,5 @@
 import type { InternetData } from '../../hooks/useDatasetCsv'
+import './index.css'
 
 interface DatasetTableProps {
   dataset: InternetData[]
@@ -6,21 +7,21 @@ interface DatasetTableProps {
 
 export function DatasetTable({ dataset }: DatasetTableProps) {
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Download</th>
-          <th>Upload</th>
-          <th>Dependencia Adm</th>
-          <th>Localização</th>
-          <th>Tipo de tecnologia</th>
-        </tr>
-      </thead>
-      <tbody>
-        {dataset.map((row, idx) => {
-          return (
-            <tr key={idx}>
+    <div className='dataset-table-container'>
+      <table className='dataset-table'>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Download</th>
+            <th>Upload</th>
+            <th>Dependencia Adm</th>
+            <th>Localização</th>
+            <th>Tipo de tecnologia</th>
+          </tr>
+        </thead>
+        <tbody>
+          {dataset.map((row) => (
+            <tr key={row.ID}>
               <td>{row.ID}</td>
               <td>{row.Download}</td>
               <td>{row.Upload}</td>
@@ -28,9 +29,9 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
               <td>{row.Localizacao}</td>
               <td>{row.Tipo_Tecnologia}</td>
             </tr>
-          )
-        })}
-      </tbody>
-    </table>
+          ))}
+        </tbody>
+      </table>
+    </div>
   )
 }
