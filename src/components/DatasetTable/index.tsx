@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import type { InternetData } from '../../hooks/useDatasetCsv'
 import './index.css'
+import { TableHeadButton } from '../TableHeadButton'
 
 type SortableColumn = keyof InternetData
 
@@ -57,54 +58,49 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
           <tr>
             <th>Id</th>
             <th>
-              Download
-              <button
-                title='Reordenar'
-                aria-label='Reordenar'
-                type='button'
-                onClick={() => handleSort('Download')}>
-                <i className='bi bi-arrow-down-up' />
-              </button>
+              Download (Mbps)
+              <TableHeadButton 
+                column='Download'
+                onSort={handleSort}
+                currentSortColumn={sortColumn}
+                sortDirection={sortDirection}
+              />
             </th>
             <th>
-              Upload
-              <button
-                title='Reordenar'
-                aria-label='Reordenar'
-                type='button'
-                onClick={() => handleSort('Upload')}>
-                <i className='bi bi-arrow-down-up' />
-              </button>
+              Upload (Mbps)
+              <TableHeadButton 
+                column='Upload'
+                onSort={handleSort}
+                currentSortColumn={sortColumn}
+                sortDirection={sortDirection}
+              />
             </th>
             <th>
-              Dependencia Adm
-              <button
-                title='Reordenar'
-                aria-label='Reordenar'
-                type='button'
-                onClick={() => handleSort('Dependencia_Adm')}>
-                <i className='bi bi-arrow-down-up' />
-              </button>
+              Administração
+              <TableHeadButton 
+                column='Dependencia_Adm'
+                onSort={handleSort}
+                currentSortColumn={sortColumn}
+                sortDirection={sortDirection}
+              />
             </th>
             <th>
               Localização
-              <button
-                title='Reordenar'
-                aria-label='Reordenar'
-                type='button'
-                onClick={() => handleSort('Localizacao')}>
-                <i className='bi bi-arrow-down-up' />
-              </button>
+              <TableHeadButton 
+                column='Localizacao'
+                onSort={handleSort}
+                currentSortColumn={sortColumn}
+                sortDirection={sortDirection}
+              />
             </th>
             <th>
-              Tipo de tecnologia
-              <button
-                title='Reordenar'
-                aria-label='Reordenar'
-                type='button'
-                onClick={() => handleSort('Tipo_Tecnologia')}>
-                <i className='bi bi-arrow-down-up' />
-              </button>
+              Tipo de Tecnologia
+              <TableHeadButton 
+                column='Tipo_Tecnologia'
+                onSort={handleSort}
+                currentSortColumn={sortColumn}
+                sortDirection={sortDirection}
+              />
             </th>
           </tr>
         </thead>

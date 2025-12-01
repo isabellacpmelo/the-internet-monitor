@@ -11,7 +11,7 @@
 }
 
 .dataset-table thead {
-  background-color: #081e35;
+  background-color: #7a6949;
   color: #ffffff;
 }
 
@@ -32,17 +32,17 @@
 }
 
 .dataset-table tbody tr:nth-child(even) {
-  background-color: #508ac4;
+  background-color: #a7a78e;
 }
 
 .dataset-table tbody tr:nth-child(even):hover {
-  background-color: #6ba3db;
+  background-color: #b5bba5;
 }
 
 .dataset-table tbody tr:nth-child(odd) {
-  background-color: #4197b1;
+  background-color: #ddca9c;
 }
 
 .dataset-table tbody tr:nth-child(odd):hover {
-  background-color: #74c5dd;
+  background-color: #b5bba5;
 }
