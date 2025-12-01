@@ -39,20 +39,23 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
   }
 
   return (
-    <div className='dataset-table-container'>
-      <table className='dataset-table'>
+    <div className='dataset-table-container mt-10'>
+      <div className='w-full flex justify-between'>
+        <h3>Tabela de com os dados do dataset</h3>
+        <button
+          type='button'
+          onClick={() => {
+            setSortColumn('ID')
+            setSortDirection('asc')
+          }}>
+          <span>Resetar ordenação</span>
+          <i className='bi bi-arrow-counterclockwise' />
+        </button>
+      </div>
+      <table className="dataset-table">
         <thead>
           <tr>
-            <th>
-              Id{' '}
-              <button
-                title='Reordenar'
-                aria-label='Reordenar'
-                type='button'
-                onClick={() => handleSort('ID')}>
-                <i className='bi bi-arrow-down-up' />
-              </button>
-            </th>
+            <th>Id</th>
             <th>
               Download
               <button
