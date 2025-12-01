@@ -1,14 +1,6 @@
 import { useEffect, useState } from 'react'
 import Papa from 'papaparse'
-
-export interface InternetData {
-  ID: string
-  Download: number
-  Upload: number
-  Dependencia_Adm: string
-  Localizacao: string
-  Tipo_Tecnologia: string
-}
+import type { InternetData } from '../types/filters'
 
 export function useDatasetCsv(filePath: string) {
   const [data, setData] = useState<InternetData[]>([])

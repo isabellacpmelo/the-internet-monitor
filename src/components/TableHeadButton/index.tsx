@@ -1,4 +1,4 @@
-import type { InternetData } from '../../hooks/useDatasetCsv'
+import type { InternetData } from '../../types/filters'
 
 type SortableColumn = keyof InternetData
 
@@ -9,11 +9,11 @@ interface TableHeadButtonProps {
   sortDirection?: 'asc' | 'desc'
 }
 
-export function TableHeadButton({ 
-  column, 
-  onSort, 
-  currentSortColumn, 
-  sortDirection 
+export function TableHeadButton({
+  column,
+  onSort,
+  currentSortColumn,
+  sortDirection,
 }: TableHeadButtonProps) {
   const isActive = currentSortColumn === column
   const getArrowIcon = () => {
@@ -23,17 +23,13 @@ export function TableHeadButton({
 
   return (
     <button
-    className='cursor-pointer'
+      className={`cursor-pointer ml-2 ${
+        isActive ? 'opacity-90' : 'opacity-50'
+      }  ease-in-out`}
       title='Reordenar'
       aria-label='Reordenar'
       type='button'
-      onClick={() => onSort(column)}
-      style={{
-        marginLeft: '8px',
-        opacity: isActive ? 1 : 0.6,
-        transition: 'opacity 0.2s ease'
-      }}
-    >
+      onClick={() => onSort(column)}>
       <i className={`bi ${getArrowIcon()}`} />
     </button>
   )
