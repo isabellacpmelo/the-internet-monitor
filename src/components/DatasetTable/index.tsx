@@ -45,42 +45,62 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
           <tr>
             <th>
               Id{' '}
-              <button type='button' onClick={() => handleSort('ID')}>
-                ↕️
+              <button
+                title='Reordenar'
+                aria-label='Reordenar'
+                type='button'
+                onClick={() => handleSort('ID')}>
+                <i className='bi bi-arrow-down-up' />
               </button>
             </th>
             <th>
               Download
-              <button type='button' onClick={() => handleSort('Download')}>
-                ↕️
+              <button
+                title='Reordenar'
+                aria-label='Reordenar'
+                type='button'
+                onClick={() => handleSort('Download')}>
+                <i className='bi bi-arrow-down-up' />
               </button>
             </th>
             <th>
               Upload
-              <button type='button' onClick={() => handleSort('Upload')}>
-                ↕️
+              <button
+                title='Reordenar'
+                aria-label='Reordenar'
+                type='button'
+                onClick={() => handleSort('Upload')}>
+                <i className='bi bi-arrow-down-up' />
               </button>
             </th>
             <th>
               Dependencia Adm
               <button
+                title='Reordenar'
+                aria-label='Reordenar'
                 type='button'
                 onClick={() => handleSort('Dependencia_Adm')}>
-                ↕️
+                <i className='bi bi-arrow-down-up' />
               </button>
             </th>
             <th>
               Localização
-              <button type='button' onClick={() => handleSort('Localizacao')}>
-                ↕️
+              <button
+                title='Reordenar'
+                aria-label='Reordenar'
+                type='button'
+                onClick={() => handleSort('Localizacao')}>
+                <i className='bi bi-arrow-down-up' />
               </button>
             </th>
             <th>
               Tipo de tecnologia
               <button
+                title='Reordenar'
+                aria-label='Reordenar'
                 type='button'
                 onClick={() => handleSort('Tipo_Tecnologia')}>
-                ↕️
+                <i className='bi bi-arrow-down-up' />
               </button>
             </th>
           </tr>
