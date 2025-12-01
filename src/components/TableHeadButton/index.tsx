@@ -23,6 +23,7 @@ export function TableHeadButton({
 
   return (
     <button
+    className='cursor-pointer'
       title='Reordenar'
       aria-label='Reordenar'
       type='button'

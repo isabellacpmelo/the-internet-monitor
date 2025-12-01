@@ -40,8 +40,8 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
   }
 
   return (
-    <div className='dataset-table-container mt-10'>
-      <div className='w-full flex justify-between'>
+  <div>
+    <div className='w-full flex justify-between my-4'>
         <h3>Tabela de com os dados do dataset</h3>
         <button
           type='button'
@@ -53,6 +53,7 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
           <i className='bi bi-arrow-counterclockwise' />
         </button>
       </div>
+    <div className='dataset-table-container'>
       <table className="dataset-table">
         <thead>
           <tr>
@@ -118,5 +119,6 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
         </tbody>
       </table>
     </div>
+  </div>
   )
 }

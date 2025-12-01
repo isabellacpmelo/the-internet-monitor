@@ -2,47 +2,82 @@
   overflow-x: auto;
   max-height: 400px;
   overflow-y: auto;
+  background: white;
 }
 
 .dataset-table {
-  min-width: 100%;
-  border-collapse: collapse;
-  border: 1px solid #475364;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
 }
 
 .dataset-table thead {
-  background-color: #7a6949;
-  color: #ffffff;
+  background: #7a6949;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .dataset-table th {
-  border: 1px solid #475364;
   padding: 0.5rem 1rem;
   text-align: left;
   font-weight: 600;
+  font-size: 0.75rem;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .dataset-table td {
-  border: 1px solid #d1d5db;
   padding: 0.5rem 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 0.875rem;
+  color: #374151;
 }
 
 .dataset-table tbody tr {
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .dataset-table tbody tr:nth-child(even) {
-  background-color: #a7a78e;
+  background-color: #7a694973;
 }
 
-.dataset-table tbody tr:nth-child(even):hover {
-  background-color: #b5bba5;
+.dataset-table tbody tr:hover {
+  background-color: #7a69493b;
 }
 
-.dataset-table tbody tr:nth-child(odd) {
-  background-color: #ddca9c;
+/* Scrollbar personalizada */
+.dataset-table-container::-webkit-scrollbar {
+  width: 4px;
+  height: 10px;
 }
 
-.dataset-table tbody tr:nth-child(odd):hover {
-  background-color: #b5bba5;
+.dataset-table-container::-webkit-scrollbar-track {
+  background: #7a694973;
+}
+
+.dataset-table-container::-webkit-scrollbar-thumb {
+  background: #7a6949;
+}
+
+.dataset-table-container::-webkit-scrollbar-thumb:hover {
+  background: #967029;
+}
+
+/* Temporary animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dataset-table-container {
+  animation: fadeInUp 0.6s ease-out;
 }
