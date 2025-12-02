@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useEffect } from 'react'
 import { useFilters } from '../../contexts/FiltersContext'
 import type { InternetData } from '../../types/filters'
@@ -29,6 +28,7 @@ export function Filters({ data }: FiltersProps) {
 
   useEffect(() => {
     if (data.length > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setDownloadMin(options.downloadRange.min)
       setDownloadMax(options.downloadRange.max)
       setUploadMin(options.uploadRange.min)
@@ -87,9 +87,10 @@ export function Filters({ data }: FiltersProps) {
                 setDownloadMin(value)
                 setDownloadRange({ min: value, max: downloadMax })
               }}
+              className='range-input'
               placeholder='Mín'
             />
-            <span>-</span>
+            <span className='range-separator'>-</span>
             <input
               type='number'
               value={downloadMax}
@@ -100,10 +101,11 @@ export function Filters({ data }: FiltersProps) {
                 setDownloadMax(value)
                 setDownloadRange({ min: downloadMin, max: value })
               }}
+              className='range-input'
               placeholder='Máx'
             />
           </div>
-          <span>
+          <span className='range-info'>
             ({options.downloadRange.min.toFixed(1)} -{' '}
             {options.downloadRange.max.toFixed(1)} Mbps)
           </span>
@@ -124,9 +126,10 @@ export function Filters({ data }: FiltersProps) {
                 setUploadMin(value)
                 setUploadRange({ min: value, max: uploadMax })
               }}
+              className='range-input'
               placeholder='Mín'
             />
-            <span>-</span>
+            <span className='range-separator'>-</span>
             <input
               type='number'
               value={uploadMax}
@@ -137,10 +140,11 @@ export function Filters({ data }: FiltersProps) {
                 setUploadMax(value)
                 setUploadRange({ min: uploadMin, max: value })
               }}
+              className='range-input'
               placeholder='Máx'
             />
           </div>
-          <span>
+          <span className='range-info'>
             ({options.uploadRange.min.toFixed(1)} -{' '}
             {options.uploadRange.max.toFixed(1)} Mbps)
           </span>
@@ -149,17 +153,18 @@ export function Filters({ data }: FiltersProps) {
 
       <div>
         <label>Tipo de Administração:</label>
-        <div>
+        <div className='checkbox-group'>
           {options.dependenciaAdmOptions.map((option) => (
-            <label key={option}>
+            <label key={option} className='checkbox-label'>
               <input
                 type='checkbox'
                 checked={filters.dependenciaAdm.includes(option)}
                 onChange={(e) =>
                   handleDependenciaAdmChange(option, e.target.checked)
                 }
+                className='checkbox-input'
               />
-              <span>{option}</span>
+              <span className='checkbox-text'>{option}</span>
             </label>
           ))}
         </div>
@@ -167,17 +172,18 @@ export function Filters({ data }: FiltersProps) {
 
       <div>
         <label>Localização:</label>
-        <div>
+        <div className='checkbox-group'>
           {options.localizacaoOptions.map((option) => (
-            <label key={option}>
+            <label key={option} className='checkbox-label'>
               <input
                 type='checkbox'
                 checked={filters.localizacao.includes(option)}
                 onChange={(e) =>
                   handleLocalizacaoChange(option, e.target.checked)
                 }
+                className='checkbox-input'
               />
-              <span>{option}</span>
+              <span className='checkbox-text'>{option}</span>
             </label>
           ))}
         </div>
@@ -185,23 +191,24 @@ export function Filters({ data }: FiltersProps) {
 
       <div>
         <label>Tipo de Tecnologia:</label>
-        <div>
+        <div className='checkbox-group'>
           {options.tipoTecnologiaOptions.map((option) => (
-            <label key={option}>
+            <label key={option} className='checkbox-label'>
               <input
                 type='checkbox'
                 checked={filters.tipoTecnologia.includes(option)}
                 onChange={(e) =>
                   handleTipoTecnologiaChange(option, e.target.checked)
                 }
+                className='checkbox-input'
               />
-              <span>{option}</span>
+              <span className='checkbox-text'>{option}</span>
             </label>
           ))}
         </div>
       </div>
 
-      <button type='button' onClick={resetFilters}>
+      <button type='button' onClick={resetFilters} className='reset-button'>
         Limpar Filtros
       </button>
     </div>
