@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useMemo,
-  useState,
-  type ReactNode,
-} from 'react'
+import { createContext, useContext, useState, type ReactNode } from 'react'
 import type {
   DatasetFilters,
   FilterOptions,
@@ -79,48 +73,46 @@ export function FiltersProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const applyFilters = useMemo(() => {
-    return (data: InternetData[]): InternetData[] => {
-      return data.filter((item) => {
-        if (
-          item.Download < filters.downloadRange.min ||
-          item.Download > filters.downloadRange.max
-        ) {
-          return false
-        }
+  const applyFilters = (data: InternetData[]): InternetData[] => {
+    return data.filter((item) => {
+      if (
+        item.Download < filters.downloadRange.min ||
+        item.Download > filters.downloadRange.max
+      ) {
+        return false
+      }
 
-        if (
-          item.Upload < filters.uploadRange.min ||
-          item.Upload > filters.uploadRange.max
-        ) {
-          return false
-        }
+      if (
+        item.Upload < filters.uploadRange.min ||
+        item.Upload > filters.uploadRange.max
+      ) {
+        return false
+      }
 
-        if (
-          filters.dependenciaAdm.length > 0 &&
-          !filters.dependenciaAdm.includes(item.Dependencia_Adm)
-        ) {
-          return false
-        }
+      if (
+        filters.dependenciaAdm.length > 0 &&
+        !filters.dependenciaAdm.includes(item.Dependencia_Adm)
+      ) {
+        return false
+      }
 
-        if (
-          filters.localizacao.length > 0 &&
-          !filters.localizacao.includes(item.Localizacao)
-        ) {
-          return false
-        }
+      if (
+        filters.localizacao.length > 0 &&
+        !filters.localizacao.includes(item.Localizacao)
+      ) {
+        return false
+      }
 
-        if (
-          filters.tipoTecnologia.length > 0 &&
-          !filters.tipoTecnologia.includes(item.Tipo_Tecnologia)
-        ) {
-          return false
-        }
+      if (
+        filters.tipoTecnologia.length > 0 &&
+        !filters.tipoTecnologia.includes(item.Tipo_Tecnologia)
+      ) {
+        return false
+      }
 
-        return true
-      })
-    }
-  }, [filters])
+      return true
+    })
+  }
 
   const getFilterOptions = (data: InternetData[]): FilterOptions => {
     if (data.length === 0) {
