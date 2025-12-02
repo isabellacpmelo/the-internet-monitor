@@ -213,7 +213,10 @@ export function Filters({ data }: FiltersProps) {
         </div>
       </div>
 
-      <button type='button' onClick={resetFilters} className='reset-button'>
+      <button
+        type='button'
+        onClick={() => resetFilters(data)}
+        className='reset-button'>
         Limpar Filtros
       </button>
     </div>

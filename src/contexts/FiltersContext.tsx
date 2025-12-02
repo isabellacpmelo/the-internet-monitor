@@ -13,7 +13,7 @@ interface FiltersContextType {
   setDependenciaAdm: (values: string[]) => void
   setLocalizacao: (values: string[]) => void
   setTipoTecnologia: (values: string[]) => void
-  resetFilters: () => void
+  resetFilters: (data?: InternetData[]) => void
   initializeFilters: (data: InternetData[]) => void
   applyFilters: (data: InternetData[]) => InternetData[]
   getFilterOptions: (data: InternetData[]) => FilterOptions
@@ -50,14 +50,25 @@ export function FiltersProvider({ children }: { children: ReactNode }) {
     setFilters((prev) => ({ ...prev, tipoTecnologia: values }))
   }
 
-  const resetFilters = () => {
-    setFilters({
-      downloadRange: { min: 0, max: Infinity },
-      uploadRange: { min: 0, max: Infinity },
-      dependenciaAdm: [],
-      localizacao: [],
-      tipoTecnologia: [],
-    })
+  const resetFilters = (data?: InternetData[]) => {
+    if (data && data.length > 0) {
+      const options = getFilterOptions(data)
+      setFilters({
+        downloadRange: options.downloadRange,
+        uploadRange: options.uploadRange,
+        dependenciaAdm: [],
+        localizacao: [],
+        tipoTecnologia: [],
+      })
+    } else {
+      setFilters({
+        downloadRange: { min: 0, max: Infinity },
+        uploadRange: { min: 0, max: Infinity },
+        dependenciaAdm: [],
+        localizacao: [],
+        tipoTecnologia: [],
+      })
+    }
   }
 
   const initializeFilters = (data: InternetData[]) => {
