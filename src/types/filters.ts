@@ -19,3 +19,11 @@ export interface DatasetFilters {
   localizacao: string[]
   tipoTecnologia: string[]
 }
+
+export interface FilterOptions {
+  downloadRange: FilterRange
+  uploadRange: FilterRange
+  dependenciaAdmOptions: string[]
+  localizacaoOptions: string[]
+  tipoTecnologiaOptions: string[]
+}
