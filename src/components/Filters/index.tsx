@@ -76,6 +76,7 @@ export function Filters({ data }: FiltersProps) {
           </div>
           <div className='dual-range-wrapper'>
             <input
+              title='Minimo download range'
               type='range'
               min={options.downloadRange.min}
               max={options.downloadRange.max}
@@ -90,6 +91,7 @@ export function Filters({ data }: FiltersProps) {
               className='range-slider range-slider-min'
             />
             <input
+              title='Maximo download range'
               type='range'
               min={options.downloadRange.min}
               max={options.downloadRange.max}
@@ -121,6 +123,7 @@ export function Filters({ data }: FiltersProps) {
           </div>
           <div className='dual-range-wrapper'>
             <input
+              title='Minimo upload range'
               type='range'
               min={options.uploadRange.min}
               max={options.uploadRange.max}
@@ -135,6 +138,7 @@ export function Filters({ data }: FiltersProps) {
               className='range-slider range-slider-min'
             />
             <input
+              title='Maximo upload range'
               type='range'
               min={options.uploadRange.min}
               max={options.uploadRange.max}
