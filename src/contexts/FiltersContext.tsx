@@ -21,7 +21,7 @@ interface FiltersContextType {
   setTipoTecnologia: (values: string[]) => void
   resetFilters: () => void
   applyFilters: (data: InternetData[]) => InternetData[]
-  getFiltersOptions: (data: InternetData[]) => FilterOptions
+  getFilterOptions: (data: InternetData[]) => FilterOptions
 }
 
 const FiltersContext = createContext<FiltersContextType | undefined>(undefined)
@@ -40,7 +40,7 @@ export function FiltersProvider({ children }: { children: ReactNode }) {
   }
 
   const setUploadRange = (range: FilterRange) => {
-    setFilters((prev) => ({ ...prev, downloadRange: range }))
+    setFilters((prev) => ({ ...prev, uploadRange: range }))
   }
 
   const setDependenciaAdm = (values: string[]) => {
@@ -68,11 +68,17 @@ export function FiltersProvider({ children }: { children: ReactNode }) {
   const applyFilters = useMemo(() => {
     return (data: InternetData[]): InternetData[] => {
       return data.filter((item) => {
-        if (item.Download < filters.downloadRange.min || item.Download) {
+        if (
+          item.Download < filters.downloadRange.min ||
+          item.Download > filters.downloadRange.max
+        ) {
           return false
         }
 
-        if (item.Upload < filters.uploadRange.min || item.Upload) {
+        if (
+          item.Upload < filters.uploadRange.min ||
+          item.Upload > filters.uploadRange.max
+        ) {
           return false
         }
 
@@ -102,7 +108,7 @@ export function FiltersProvider({ children }: { children: ReactNode }) {
     }
   }, [filters])
 
-  const getFiltersOptions = (data: InternetData[]): FilterOptions => {
+  const getFilterOptions = (data: InternetData[]): FilterOptions => {
     if (data.length === 0) {
       return {
         downloadRange: { min: 0, max: 0 },
@@ -133,7 +139,7 @@ export function FiltersProvider({ children }: { children: ReactNode }) {
       ].sort(),
       tipoTecnologiaOptions: [
         ...new Set(data.map((item) => item.Tipo_Tecnologia)),
-      ],
+      ].sort(),
     }
   }
 
@@ -148,7 +154,7 @@ export function FiltersProvider({ children }: { children: ReactNode }) {
         setTipoTecnologia,
         resetFilters,
         applyFilters,
-        getFiltersOptions,
+        getFilterOptions,
       }}>
       {children}
     </FiltersContext.Provider>
