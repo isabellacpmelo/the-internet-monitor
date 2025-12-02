@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useMemo, useEffect, useRef } from 'react'
 import { useFilters } from '../../contexts/FiltersContext'
 import type { InternetData } from '../../types/filters'
 import './style.css'
@@ -16,34 +16,27 @@ export function Filters({ data }: FiltersProps) {
     setLocalizacao,
     setTipoTecnologia,
     resetFilters,
+    initializeFilters,
     getFilterOptions,
   } = useFilters()
 
-  const [downloadMin, setDownloadMin] = useState(0)
-  const [downloadMax, setDownloadMax] = useState(1000)
-  const [uploadMin, setUploadMin] = useState(0)
-  const [uploadMax, setUploadMax] = useState(100)
-
-  const options = getFilterOptions(data)
+  const options = useMemo(
+    () => getFilterOptions(data),
+    [data, getFilterOptions]
+  )
+  const isInitialized = useRef(false)
 
   useEffect(() => {
-    if (data.length > 0) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setDownloadMin(options.downloadRange.min)
-      setDownloadMax(options.downloadRange.max)
-      setUploadMin(options.uploadRange.min)
-      setUploadMax(options.uploadRange.max)
-
-      setDownloadRange({
-        min: options.downloadRange.min,
-        max: options.downloadRange.max,
-      })
-      setUploadRange({
-        min: options.uploadRange.min,
-        max: options.uploadRange.max,
-      })
+    if (data.length > 0 && !isInitialized.current) {
+      initializeFilters(data)
+      isInitialized.current = true
     }
-  }, [data, options, setDownloadRange, setUploadRange])
+  }, [data, initializeFilters])
+
+  const downloadMin = data.length > 0 ? filters.downloadRange.min : 0
+  const downloadMax = data.length > 0 ? filters.downloadRange.max : 1000
+  const uploadMin = data.length > 0 ? filters.uploadRange.min : 0
+  const uploadMax = data.length > 0 ? filters.uploadRange.max : 100
 
   const handleDependenciaAdmChange = (value: string, checked: boolean) => {
     if (checked) {
@@ -75,34 +68,40 @@ export function Filters({ data }: FiltersProps) {
 
       <div>
         <label>Range de Download (Mbps):</label>
-        <div>
-          <div>
-            <input
-              type='number'
-              value={downloadMin}
-              min={options.downloadRange.min}
-              max={options.downloadRange.max}
-              onChange={(e) => {
-                const value = Number(e.target.value)
-                setDownloadMin(value)
-                setDownloadRange({ min: value, max: downloadMax })
-              }}
-              className='range-input'
-              placeholder='Mín'
-            />
+        <div className='range-container'>
+          <div className='range-values'>
+            <span className='range-value'>{downloadMin.toFixed(1)}</span>
             <span className='range-separator'>-</span>
+            <span className='range-value'>{downloadMax.toFixed(1)}</span>
+          </div>
+          <div className='dual-range-wrapper'>
             <input
-              type='number'
-              value={downloadMax}
+              type='range'
               min={options.downloadRange.min}
               max={options.downloadRange.max}
+              step='0.1'
+              value={downloadMin}
               onChange={(e) => {
                 const value = Number(e.target.value)
-                setDownloadMax(value)
-                setDownloadRange({ min: downloadMin, max: value })
+                if (value <= downloadMax) {
+                  setDownloadRange({ min: value, max: downloadMax })
+                }
               }}
-              className='range-input'
-              placeholder='Máx'
+              className='range-slider range-slider-min'
+            />
+            <input
+              type='range'
+              min={options.downloadRange.min}
+              max={options.downloadRange.max}
+              step='0.1'
+              value={downloadMax}
+              onChange={(e) => {
+                const value = Number(e.target.value)
+                if (value >= downloadMin) {
+                  setDownloadRange({ min: downloadMin, max: value })
+                }
+              }}
+              className='range-slider range-slider-max'
             />
           </div>
           <span className='range-info'>
@@ -114,34 +113,40 @@ export function Filters({ data }: FiltersProps) {
 
       <div>
         <label>Range de Upload (Mbps):</label>
-        <div>
-          <div>
-            <input
-              type='number'
-              value={uploadMin}
-              min={options.uploadRange.min}
-              max={options.uploadRange.max}
-              onChange={(e) => {
-                const value = Number(e.target.value)
-                setUploadMin(value)
-                setUploadRange({ min: value, max: uploadMax })
-              }}
-              className='range-input'
-              placeholder='Mín'
-            />
+        <div className='range-container'>
+          <div className='range-values'>
+            <span className='range-value'>{uploadMin.toFixed(1)}</span>
             <span className='range-separator'>-</span>
+            <span className='range-value'>{uploadMax.toFixed(1)}</span>
+          </div>
+          <div className='dual-range-wrapper'>
             <input
-              type='number'
-              value={uploadMax}
+              type='range'
               min={options.uploadRange.min}
               max={options.uploadRange.max}
+              step='0.1'
+              value={uploadMin}
               onChange={(e) => {
                 const value = Number(e.target.value)
-                setUploadMax(value)
-                setUploadRange({ min: uploadMin, max: value })
+                if (value <= uploadMax) {
+                  setUploadRange({ min: value, max: uploadMax })
+                }
               }}
-              className='range-input'
-              placeholder='Máx'
+              className='range-slider range-slider-min'
+            />
+            <input
+              type='range'
+              min={options.uploadRange.min}
+              max={options.uploadRange.max}
+              step='0.1'
+              value={uploadMax}
+              onChange={(e) => {
+                const value = Number(e.target.value)
+                if (value >= uploadMin) {
+                  setUploadRange({ min: uploadMin, max: value })
+                }
+              }}
+              className='range-slider range-slider-max'
             />
           </div>
           <span className='range-info'>

@@ -20,6 +20,7 @@ interface FiltersContextType {
   setLocalizacao: (values: string[]) => void
   setTipoTecnologia: (values: string[]) => void
   resetFilters: () => void
+  initializeFilters: (data: InternetData[]) => void
   applyFilters: (data: InternetData[]) => InternetData[]
   getFilterOptions: (data: InternetData[]) => FilterOptions
 }
@@ -63,6 +64,19 @@ export function FiltersProvider({ children }: { children: ReactNode }) {
       localizacao: [],
       tipoTecnologia: [],
     })
+  }
+
+  const initializeFilters = (data: InternetData[]) => {
+    if (data.length > 0) {
+      const options = getFilterOptions(data)
+      setFilters({
+        downloadRange: options.downloadRange,
+        uploadRange: options.uploadRange,
+        dependenciaAdm: [],
+        localizacao: [],
+        tipoTecnologia: [],
+      })
+    }
   }
 
   const applyFilters = useMemo(() => {
@@ -153,6 +167,7 @@ export function FiltersProvider({ children }: { children: ReactNode }) {
         setLocalizacao,
         setTipoTecnologia,
         resetFilters,
+        initializeFilters,
         applyFilters,
         getFilterOptions,
       }}>
