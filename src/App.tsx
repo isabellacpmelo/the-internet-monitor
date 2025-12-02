@@ -1,10 +1,11 @@
-import './App.css'
+import { FiltersProvider } from './contexts/FiltersContext'
+import MainTemplate from './templates/MainTemplate'
 
 function App() {
   return (
-    <>
-      <div className='bg-amber-200 text-amber-900'>Soon..</div>
-    </>
+    <FiltersProvider>
+      <MainTemplate />
+    </FiltersProvider>
   )
 }
 
