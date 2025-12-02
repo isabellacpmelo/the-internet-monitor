@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import './index.css'
+import './style.css'
 import { TableHeadButton } from '../TableHeadButton'
 import type { InternetData } from '../../types/filters'
 
