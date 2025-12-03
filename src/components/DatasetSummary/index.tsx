@@ -22,7 +22,10 @@ export function DatasetSummary({ data, filteredData }: DatasetSummaryProps) {
     <div>
       <div>
         <div>
-          <h2>Resumo Geral</h2>
+          <h2>
+            <i className='bi bi-file-earmark-text' />
+            Resumo Geral
+          </h2>
           <div className='grid grid-cols-3'>
             <h4>
               <span className='text-transparent'>Tipo</span>
@@ -261,7 +264,7 @@ export function DatasetSummary({ data, filteredData }: DatasetSummaryProps) {
           />
         </div>
 
-        <div className='bg-blue-500 w-1/2 h-1 py-4' />
+        <div className='bg-blue-500 w-1/2 h-1 my-4' />
 
         <div>
           <h2>Médias de Velocidade por Localização</h2>

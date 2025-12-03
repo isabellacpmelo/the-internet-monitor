@@ -27,12 +27,24 @@ export function DatasetSummaryLines({
       <div className='grid grid-cols-3'>
         <div className='stats-type'>{label}</div>
         <div className='grid grid-cols-2'>
-          <div>⬇️ {formatNumber(originalSpeedData?.download || 0)}</div>
-          <div>⬆️ {formatNumber(originalSpeedData?.upload || 0)}</div>
+          <div className='flex gap-2'>
+            <i title='Download' className='bi bi-download' />
+            <span>{formatNumber(originalSpeedData?.download || 0)}</span>
+          </div>
+          <div className='flex gap-2'>
+            <i title='Upload' className='bi bi-upload' />
+            <span>{formatNumber(originalSpeedData?.upload || 0)}</span>
+          </div>
         </div>
         <div className='grid grid-cols-2'>
-          <div>⬇️ {formatNumber(filteredSpeedData?.download || 0)}</div>
-          <div>⬆️ {formatNumber(filteredSpeedData?.upload || 0)}</div>
+          <div className='flex gap-2'>
+            <i title='Download' className='bi bi-download' />
+            <span>{formatNumber(filteredSpeedData?.download || 0)}</span>
+          </div>
+          <div className='flex gap-2'>
+            <i title='Upload' className='bi bi-upload' />
+            <span>{formatNumber(filteredSpeedData?.upload || 0)}</span>
+          </div>
         </div>
       </div>
     )
