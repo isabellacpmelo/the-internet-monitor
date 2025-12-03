@@ -23,7 +23,7 @@ export function DatasetSummary({ data, filteredData }: DatasetSummaryProps) {
       <div>
         <div>
           <h2>
-            <i className='bi bi-file-earmark-text' />
+            <i className='bi bi-file-earmark-text mr-2' />
             Resumo Geral
           </h2>
           <div className='grid grid-cols-3'>

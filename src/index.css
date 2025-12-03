@@ -14,17 +14,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-::before,
-::after {
-  box-sizing: inherit;
-}
-
 body {
   background: #f6f6f6;
   height: 100%;
