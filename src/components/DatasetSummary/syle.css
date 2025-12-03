@@ -1,16 +1,23 @@
-h4 {
-  color: aquamarine;
+h2 {
+  font-weight: bold;
+  text-align: center;
 }
 
 h3 {
-  color: red;
+  border-top: 1px solid #d3d3d3;
+  font-weight: bold;
+  color: rgb(39, 39, 39);
+  padding-top: 12px;
 }
 
-h2 {
-  color: blue;
+h4 {
+  color: rgb(53, 54, 54);
 }
 
 .stats-type {
-  font-weight: bold;
-  color: blueviolet;
+  color: grey;
+}
+
+.summary-container {
+  margin-bottom: 12px;
 }
