@@ -20,7 +20,7 @@ export function DatasetSummary({ data, filteredData }: DatasetSummaryProps) {
 
   return (
     <div>
-      <div>
+      <div className='max-w-4xl'>
         <div>
           <h2>
             <i className='bi bi-file-earmark-text mr-2' />
