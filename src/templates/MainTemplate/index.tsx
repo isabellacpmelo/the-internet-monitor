@@ -20,16 +20,14 @@ function MainTemplate() {
   }
 
   return (
-    <div className='p-4'>
+    <div className='p-16 mb-8'>
       <h1 className='text-2xl'>Welcome to the internet monitor :)</h1>
 
       <Filters data={data} />
-      <p>Total de linhas do csv: {data.length}</p>
-      <p>Total de linhas com o filtro: {filteredData.length}</p>
 
-      <div className='bg-red-500 w-full h-2 my-2' />
+      <div className='bg-red-500 w-full h-1 my-2' />
       <DatasetSummary data={data} filteredData={filteredData} />
-      <div className='bg-red-500 w-full h-2 my-2' />
+      <div className='bg-red-500 w-full h-1 my-2' />
       <DatasetTable dataset={filteredData} />
     </div>
   )

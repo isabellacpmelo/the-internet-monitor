@@ -26,16 +26,16 @@ export function DatasetSummary({ data, filteredData }: DatasetSummaryProps) {
             <i className='bi bi-file-earmark-text mr-2' />
             Resumo Geral
           </h2>
+
           <div className='grid grid-cols-3'>
-            <h4>
+            <h3 className='bg-black/15'>
               <span className='text-transparent'>Tipo</span>
-            </h4>
-            <h4>Sem Filtro</h4>
-            <h4>Com Filtro</h4>
+            </h3>
+            <h3 className='bg-black/15'>Sem Filtro</h3>
+            <h3 className='bg-black/15'>Com Filtro</h3>
           </div>
 
-          <div className='summary-container'>
-            <h3>Ocorrencias Gerais</h3>
+          <div className='summary-container mt-2'>
             <DatasetSummaryLines
               label='Dados totais'
               originalValue={stats.totalRecords}
@@ -44,7 +44,7 @@ export function DatasetSummary({ data, filteredData }: DatasetSummaryProps) {
           </div>
 
           <div className='summary-container'>
-            <h3>Velocidade Download</h3>
+            <h4>Velocidade Download</h4>
             <DatasetSummaryLines
               label='Média'
               originalValue={formatNumber(stats.downloadStats.average)}
@@ -63,7 +63,7 @@ export function DatasetSummary({ data, filteredData }: DatasetSummaryProps) {
           </div>
 
           <div className='summary-container'>
-            <h3>Velocidade Upload</h3>
+            <h4>Velocidade Upload</h4>
             <DatasetSummaryLines
               label='Média'
               originalValue={formatNumber(stats.uploadStats.average)}
@@ -81,7 +81,7 @@ export function DatasetSummary({ data, filteredData }: DatasetSummaryProps) {
             />
           </div>
           <div className='summary-container'>
-            <h3>Distribuição por Tecnologia</h3>
+            <h4>Distribuição por Tecnologia</h4>
             <DatasetSummaryLines
               label='Fibra'
               originalValue={`${
@@ -144,7 +144,7 @@ export function DatasetSummary({ data, filteredData }: DatasetSummaryProps) {
             />
           </div>
           <div className='summary-container'>
-            <h3>Distribuição por Localização</h3>
+            <h4>Distribuição por Localização</h4>
             <DatasetSummaryLines
               label='Urbana'
               originalValue={`${stats.locationCount['Urbana']} (${formatPercent(
@@ -174,7 +174,7 @@ export function DatasetSummary({ data, filteredData }: DatasetSummaryProps) {
           </div>
           <div className='summary-container'>
             {' '}
-            <h3>Distribuição por Administração</h3>
+            <h4>Distribuição por Administração</h4>
             <DatasetSummaryLines
               label='Municipal'
               originalValue={`${
@@ -223,17 +223,18 @@ export function DatasetSummary({ data, filteredData }: DatasetSummaryProps) {
           </div>
         </div>
 
-        <div className='bg-blue-500 w-1/2 h-1 my-4' />
-
         <div>
-          <h2>Médias de Velocidade por Tecnologia</h2>
+          <h2>
+            <i className='bi bi-pc-display mr-2' />
+            Médias de Velocidade por Tecnologia
+          </h2>
 
           <div className='grid grid-cols-3'>
-            <h4>
+            <h3 className='bg-black/15'>
               <span className='text-transparent'>Tipo</span>
-            </h4>
-            <h4>Sem Filtro</h4>
-            <h4>Com Filtro</h4>
+            </h3>
+            <h3 className='bg-black/15'>Sem Filtro</h3>
+            <h3 className='bg-black/15'>Com Filtro</h3>
           </div>
 
           <DatasetSummaryLines
@@ -264,29 +265,34 @@ export function DatasetSummary({ data, filteredData }: DatasetSummaryProps) {
           />
         </div>
 
-        <div className='bg-blue-500 w-1/2 h-1 my-4' />
-
         <div>
-          <h2>Médias de Velocidade por Localização</h2>
+          <h2>
+            <i className='bi bi-geo mr-2' />
+            Médias de Velocidade por Localização
+          </h2>
           <div className='grid grid-cols-3'>
-            <h4>
+            <h3 className='bg-black/15'>
               <span className='text-transparent'>Tipo</span>
-            </h4>
-            <h4>Sem Filtro</h4>
-            <h4>Com Filtro</h4>
+            </h3>
+            <h3 className='bg-black/15'>Sem Filtro</h3>
+            <h3 className='bg-black/15'>Com Filtro</h3>
           </div>
-          <DatasetSummaryLines
-            label='Urbana'
-            originalSpeedData={stats.averagesByLocation['Urbana']}
-            filteredSpeedData={filteredStats.averagesByLocation['Urbana']}
-            type='speed'
-          />
-          <DatasetSummaryLines
-            label='Rural'
-            originalSpeedData={stats.averagesByLocation['Rural']}
-            filteredSpeedData={filteredStats.averagesByLocation['Rural']}
-            type='speed'
-          />
+          <div>
+            <DatasetSummaryLines
+              label='Urbana'
+              originalSpeedData={stats.averagesByLocation['Urbana']}
+              filteredSpeedData={filteredStats.averagesByLocation['Urbana']}
+              type='speed'
+            />
+          </div>
+          <div>
+            <DatasetSummaryLines
+              label='Rural'
+              originalSpeedData={stats.averagesByLocation['Rural']}
+              filteredSpeedData={filteredStats.averagesByLocation['Rural']}
+              type='speed'
+            />
+          </div>
         </div>
       </div>
     </div>
