@@ -70,13 +70,9 @@ function MainTemplate() {
         </div>
       </div>
 
-      <DatasetCharts data={data} />
-
-      <div className='bg-red-500 w-full h-1 my-2' />
+      <DatasetCharts data={filteredData} />
       <DatasetSummary data={data} filteredData={filteredData} />
-      <div className='bg-red-500 w-full h-1 my-2' />
       <DatasetTable dataset={filteredData} />
-
       <FilterDrawer
         isOpen={isDrawerOpen}
         onClose={closeDrawer}
