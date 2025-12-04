@@ -20,6 +20,7 @@ export interface DatasetStats {
   administrationCount: Record<string, number>
   averagesByTechnology: Record<string, { download: number; upload: number }>
   averagesByLocation: Record<string, { download: number; upload: number }>
+  averagesByAdministration: Record<string, { download: number; upload: number }>
 }
 
 export function useDatasetStats(data: InternetData[]): DatasetStats {
@@ -34,6 +35,7 @@ export function useDatasetStats(data: InternetData[]): DatasetStats {
         administrationCount: {},
         averagesByTechnology: {},
         averagesByLocation: {},
+        averagesByAdministration: {},
       }
     }
 
@@ -126,6 +128,31 @@ export function useDatasetStats(data: InternetData[]): DatasetStats {
       {} as Record<string, { download: number; upload: number }>
     )
 
+    // Médias por administração
+    const administrationGroups = data.reduce((acc, item) => {
+      const admin = item.Dependencia_Adm
+      if (!acc[admin]) {
+        acc[admin] = { downloads: [], uploads: [] }
+      }
+      acc[admin].downloads.push(item.Download)
+      acc[admin].uploads.push(item.Upload)
+      return acc
+    }, {} as Record<string, { downloads: number[]; uploads: number[] }>)
+
+    const averagesByAdministration = Object.keys(administrationGroups).reduce(
+      (acc, admin) => {
+        const downloads = administrationGroups[admin].downloads
+        const uploads = administrationGroups[admin].uploads
+        acc[admin] = {
+          download:
+            downloads.reduce((sum, val) => sum + val, 0) / downloads.length,
+          upload: uploads.reduce((sum, val) => sum + val, 0) / uploads.length,
+        }
+        return acc
+      },
+      {} as Record<string, { download: number; upload: number }>
+    )
+
     return {
       totalRecords: data.length,
       downloadStats: {
@@ -145,6 +172,7 @@ export function useDatasetStats(data: InternetData[]): DatasetStats {
       administrationCount,
       averagesByTechnology,
       averagesByLocation,
+      averagesByAdministration,
     }
   }, [data])
 }

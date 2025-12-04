@@ -47,6 +47,24 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
 
   const COLORS = ['#623db6ff', '#284449ff']
 
+  const speedByAdminData = Object.entries(stats.averagesByAdministration).map(
+    ([admin, speeds]) => ({
+      dependencia: admin,
+      download: Number(speeds.download.toFixed(2)),
+      upload: Number(speeds.upload.toFixed(2)),
+    })
+  )
+
+  const adminDistributionData = Object.entries(stats.administrationCount).map(
+    ([admin, count]) => ({
+      name: admin,
+      value: count,
+      percentage: ((count / stats.totalRecords) * 100).toFixed(1),
+    })
+  )
+
+  const ADMIN_COLORS = ['#4c6d4cff', '#9c7c65ff', '#1d6136ff']
+
   return (
     <div className=''>
       <h2 className='text-2xl font-bold mb-6 text-center text-gray-800'>
@@ -175,49 +193,155 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
         Distribuição de Registros por Localização
       </h2>
 
-      <div className='bg-white rounded-lg shadow-lg p-8'>
-        <ResponsiveContainer width='100%' height={400}>
-          <PieChart>
-            <Pie
-              data={locationDistributionData}
-              cx='50%'
-              cy='50%'
-              labelLine={false}
-              label
-              outerRadius={120}
-              fill='#8884d8'
-              dataKey='value'>
-              {locationDistributionData.map((_, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#f9fafb',
-                border: '1px solid #d1d5db',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              }}
-              formatter={(value, name) => [
-                `${value} registros (${
-                  locationDistributionData.find((item) => item.value === value)
-                    ?.percentage
-                }%)`,
-                name === 'value' ? 'Quantidade' : name,
-              ]}
-            />
-            <Legend
-              wrapperStyle={{
-                paddingTop: '20px',
+      <ResponsiveContainer width='100%' height={400}>
+        <PieChart>
+          <Pie
+            data={locationDistributionData}
+            cx='50%'
+            cy='50%'
+            labelLine={false}
+            label
+            outerRadius={120}
+            fill='#8884d8'
+            dataKey='value'>
+            {locationDistributionData.map((_, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
+            ))}
+          </Pie>
+          <Tooltip
+            contentStyle={{
+              backgroundColor: '#f9fafb',
+              border: '1px solid #d1d5db',
+              borderRadius: '8px',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            }}
+            formatter={(value, name) => [
+              `${value} registros (${
+                locationDistributionData.find((item) => item.value === value)
+                  ?.percentage
+              }%)`,
+              name === 'value' ? 'Quantidade' : name,
+            ]}
+          />
+          <Legend
+            wrapperStyle={{
+              paddingTop: '20px',
+              fontWeight: '500',
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+
+      <h2 className='text-2xl font-bold mb-6 text-center text-gray-800'>
+        <i className='bi bi-building mr-3' />
+        Velocidades por Dependência Administrativa
+      </h2>
+
+      <ResponsiveContainer width={'100%'} height={400}>
+        <BarChart
+          data={speedByAdminData}
+          margin={{ top: 30, right: 30, left: 20, bottom: 80 }}>
+          <CartesianGrid strokeDasharray='3 3' opacity={0.3} />
+          <XAxis
+            dataKey='dependencia'
+            angle={-45}
+            textAnchor='end'
+            height={80}
+            fontSize={13}
+            fontWeight='500'
+            tick={{ fill: '#374151' }}
+          />
+          <YAxis
+            label={{
+              value: 'Velocidade (Mbps)',
+              angle: -90,
+              position: 'insideLeft',
+              style: {
+                textAnchor: 'middle',
+                fill: '#374151',
                 fontWeight: '500',
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
+              },
+            }}
+            tick={{ fill: '#374151' }}
+          />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: '#f9fafb',
+              border: '1px solid #d1d5db',
+              borderRadius: '8px',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            }}
+            labelStyle={{ color: '#1f2937', fontWeight: '600' }}
+          />
+          <Legend
+            wrapperStyle={{
+              paddingTop: '20px',
+              fontWeight: '500',
+            }}
+          />
+          <Bar
+            dataKey='download'
+            fill='#2b5679ff'
+            name='Download'
+            radius={[4, 4, 0, 0]}
+          />
+          <Bar
+            dataKey='upload'
+            fill='#51923eff'
+            name='Upload'
+            radius={[4, 4, 0, 0]}
+          />
+        </BarChart>
+      </ResponsiveContainer>
+
+      <h2 className='text-2xl font-bold mb-6 text-center text-gray-800'>
+        <i className='bi bi-pie-chart mr-3' />
+        Distribuição por Dependência Administrativa
+      </h2>
+      <ResponsiveContainer width='100%' height={400}>
+        <PieChart>
+          <Pie
+            data={adminDistributionData}
+            cx='50%'
+            cy='50%'
+            labelLine={false}
+            label
+            outerRadius={120}
+            fill='#8884d8'
+            dataKey='value'>
+            {adminDistributionData.map((_, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={ADMIN_COLORS[index % ADMIN_COLORS.length]}
+              />
+            ))}
+          </Pie>
+          <Tooltip
+            contentStyle={{
+              backgroundColor: '#f9fafb',
+              border: '1px solid #d1d5db',
+              borderRadius: '8px',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            }}
+            formatter={(value, name) => [
+              `${value} registros (${
+                adminDistributionData.find((item) => item.value === value)
+                  ?.percentage
+              }%)`,
+              name === 'value' ? 'Quantidade' : name,
+            ]}
+          />
+          <Legend
+            wrapperStyle={{
+              paddingTop: '20px',
+              fontWeight: '500',
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     </div>
   )
 }
