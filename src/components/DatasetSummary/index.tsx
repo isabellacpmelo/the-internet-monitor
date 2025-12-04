@@ -35,6 +35,7 @@ export function DatasetSummary({ data, filteredData }: DatasetSummaryProps) {
             <h3 className='bg-black/15'>Com Filtro</h3>
           </div>
 
+          <h4>Quantidade total de registros</h4>
           <div className='summary-container mt-2'>
             <DatasetSummaryLines
               label='Dados totais'
