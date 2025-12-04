@@ -10,6 +10,9 @@ import {
   PieChart,
   Pie,
   Cell,
+  ScatterChart,
+  Scatter,
+  ReferenceLine,
 } from 'recharts'
 import { useDatasetStats } from '../../hooks/DatasetStats'
 import type { InternetData } from '../../types/filters'
@@ -74,6 +77,13 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
   )
 
   const TECH_COLORS = ['#222e42ff', '#1a4e3dff', '#aa833fff', '#925858ff']
+
+  const scatterData = data.map((item, index) => ({
+    download: item.Download,
+    upload: item.Upload,
+    tecnologia: item.Tipo_Tecnologia,
+    id: index,
+  }))
 
   return (
     <div className=''>
@@ -440,6 +450,226 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
         <i className='bi bi-pie-chart-fill mr-3' />
         Distribuição por Tipo de Tecnologia
       </h2>
+
+      <h2 className='text-2xl font-bold mb-6 text-center text-gray-800'>
+        <i className='bi bi-scatter-chart mr-3' />
+        Relação Download vs Upload
+      </h2>
+
+      <ResponsiveContainer width='100%' height={500}>
+        <ScatterChart margin={{ top: 30, right: 30, bottom: 50, left: 50 }}>
+          <CartesianGrid strokeDasharray='3 3' opacity={0.3} />
+          <XAxis
+            dataKey='download'
+            type='number'
+            domain={['dataMin', 'dataMax']}
+            label={{
+              value: 'Download (Mbps)',
+              position: 'insideBottom',
+              offset: -10,
+              style: {
+                textAnchor: 'middle',
+                fill: '#374151',
+                fontWeight: '500',
+              },
+            }}
+            tick={{ fill: '#374151' }}
+          />
+          <YAxis
+            dataKey='upload'
+            type='number'
+            domain={['dataMin', 'dataMax']}
+            label={{
+              value: 'Upload (Mbps)',
+              angle: -90,
+              position: 'insideLeft',
+              style: {
+                textAnchor: 'middle',
+                fill: '#374151',
+                fontWeight: '500',
+              },
+            }}
+            tick={{ fill: '#374151' }}
+          />
+
+          <ReferenceLine
+            segment={(() => {
+              const n = scatterData.length
+              const sumX = scatterData.reduce((sum, d) => sum + d.download, 0)
+              const sumY = scatterData.reduce((sum, d) => sum + d.upload, 0)
+              const sumXY = scatterData.reduce(
+                (sum, d) => sum + d.download * d.upload,
+                0
+              )
+              const sumXX = scatterData.reduce(
+                (sum, d) => sum + d.download * d.download,
+                0
+              )
+
+              const slope =
+                (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX)
+              const intercept = (sumY - slope * sumX) / n
+
+              const minX = Math.min(...scatterData.map((d) => d.download))
+              const maxX = Math.max(...scatterData.map((d) => d.download))
+
+              return [
+                { x: minX, y: Math.max(0, slope * minX + intercept) },
+                { x: maxX, y: slope * maxX + intercept },
+              ]
+            })()}
+            stroke='#f59e0b'
+            strokeWidth={3}
+          />
+
+          <ReferenceLine
+            x={100}
+            stroke='#9ca3af'
+            strokeDasharray='2 2'
+            strokeWidth={1}
+            opacity={0.5}
+          />
+          <ReferenceLine
+            x={300}
+            stroke='#9ca3af'
+            strokeDasharray='2 2'
+            strokeWidth={1}
+            opacity={0.5}
+          />
+          <ReferenceLine
+            x={500}
+            stroke='#9ca3af'
+            strokeDasharray='2 2'
+            strokeWidth={1}
+            opacity={0.5}
+          />
+          <ReferenceLine
+            y={25}
+            stroke='#9ca3af'
+            strokeDasharray='2 2'
+            strokeWidth={1}
+            opacity={0.5}
+          />
+          <ReferenceLine
+            y={50}
+            stroke='#9ca3af'
+            strokeDasharray='2 2'
+            strokeWidth={1}
+            opacity={0.5}
+          />
+          <ReferenceLine
+            y={100}
+            stroke='#9ca3af'
+            strokeDasharray='2 2'
+            strokeWidth={1}
+            opacity={0.5}
+          />
+          <Tooltip
+            cursor={{ strokeDasharray: '3 3' }}
+            contentStyle={{
+              backgroundColor: '#f9fafb',
+              border: '1px solid #d1d5db',
+              borderRadius: '8px',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            }}
+            content={({ active, payload }) => {
+              if (active && payload && payload.length) {
+                const data = payload[0].payload
+                const ratio = ((data.upload / data.download) * 100).toFixed(1)
+                const efficiency =
+                  data.download > 100
+                    ? data.upload > 50
+                      ? 'Excelente'
+                      : data.upload > 25
+                      ? 'Boa'
+                      : 'Limitada'
+                    : 'Baixa'
+                return (
+                  <div className='bg-white p-3 border rounded shadow-lg'>
+                    <p className='font-semibold text-gray-800 mb-2'>
+                      Velocidades
+                    </p>
+                    <p className='text-blue-600'>
+                      📥 Download: {data.download} Mbps
+                    </p>
+                    <p className='text-green-600'>
+                      📤 Upload: {data.upload} Mbps
+                    </p>
+                    <p className='text-orange-600'>📊 Proporção: {ratio}%</p>
+                    <p className='text-gray-600'>⚡ Qualidade: {efficiency}</p>
+                  </div>
+                )
+              }
+              return null
+            }}
+          />
+          <Legend
+            wrapperStyle={{
+              paddingTop: '20px',
+              fontWeight: '500',
+            }}
+          />
+          <Scatter
+            data={scatterData}
+            fill='#6366f1'
+            name='Conexões'
+            r={5}
+            fillOpacity={0.7}
+            stroke='#4f46e5'
+            strokeWidth={1}
+          />
+        </ScatterChart>
+      </ResponsiveContainer>
+
+      <div>
+        <h3 className='text-lg font-bold text-gray-800 mb-4 text-center'>
+          <i className='bi bi-info-circle mr-2' />
+          Análise de Correlação com Linhas de Referência
+        </h3>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-700'>
+          <div>
+            <h4 className='font-semibold mb-2'>Linhas de Referência:</h4>
+            <ul className='space-y-1'>
+              <li>
+                <span className='w-3 h-1 bg-orange-500 inline-block mr-2'></span>
+                Laranja: Tendência real dos dados (regressão linear)
+              </li>
+              <li>
+                <span className='w-3 h-1 bg-gray-400 inline-block mr-2 opacity-50'></span>
+                Cinza: Marcos de velocidade (25, 50, 100, 300, 500 Mbps)
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 className='font-semibold mb-2'>Como interpretar:</h4>
+            <ul className='space-y-1'>
+              <li>
+                • Pontos acima da linha laranja = upload melhor que a média
+              </li>
+              <li>• Pontos próximos à linha laranja = performance típica</li>
+              <li>
+                • Pontos abaixo da linha laranja = upload menor que a tendência
+              </li>
+              <li>
+                • Dispersão vertical = variabilidade na qualidade do upload
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 className='font-semibold mb-2'>Qualidade da conexão:</h4>
+            <ul className='space-y-1'>
+              <li>
+                • ✅ Excelente: Download &gt;100 Mbps e Upload &gt;50 Mbps
+              </li>
+              <li>• ☑️ Boa: Download &gt;100 Mbps e Upload &gt;25 Mbps</li>
+              <li>
+                • ‼️ Limitada: Download &gt;100 Mbps mas Upload &lt;25 Mbps
+              </li>
+              <li>• ❌ Baixa: Download &lt;100 Mbps</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
