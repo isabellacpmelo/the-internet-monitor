@@ -63,9 +63,7 @@ export function Filters({ data }: FiltersProps) {
   }
 
   return (
-    <div>
-      <h4>Filtros</h4>
-
+    <div className='filters-container'>
       <div>
         <label>Range de Download (Mbps):</label>
         <div className='range-container'>

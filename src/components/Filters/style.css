@@ -1,7 +1,14 @@
+.filters-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
 .range-container {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 100%;
+  max-width: 350px;
 }
 
 .range-values {
