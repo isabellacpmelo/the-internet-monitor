@@ -2,11 +2,11 @@
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-weight: 400;
+  font-weight: 200;
 
   /* color-scheme: light dark; */
-    color: #213547;
-    background-color: #ffffff;
+  color: #213547;
+  background-color: #ffffff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,16 +15,44 @@
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background: #f6f6f6;
+  height: 100%;
+  font-family: 'Open Sans', sans-serif !important;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+  min-width: 330px;
 }
-/* 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-} */
+
+*::-webkit-scrollbar {
+  width: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: rgb(116, 119, 119);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(157, 160, 159);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #a3a3a3;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #6b6b6b;
+}

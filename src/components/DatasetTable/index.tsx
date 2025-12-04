@@ -95,7 +95,7 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
                 />
               </th>
               <th>
-                Tipo de Tecnologia
+                Tecnologia
                 <TableHeadButton
                   column='Tipo_Tecnologia'
                   onSort={handleSort}

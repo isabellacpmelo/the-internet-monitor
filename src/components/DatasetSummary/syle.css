@@ -1,0 +1,27 @@
+h2 {
+  font-weight: bold;
+  text-align: center;
+  font-size: 24px;
+}
+
+h3 {
+  font-weight: bold;
+  color: rgb(39, 39, 39);
+  margin-top: 12px;
+}
+
+h4 {
+  color: rgb(53, 54, 54);
+  margin-bottom: 4px;
+  background-color: #bbb6ad;
+  text-align: center;
+  padding: 1px;
+}
+
+.stats-type {
+  color: grey;
+}
+
+.summary-container {
+  margin-bottom: 12px;
+}
