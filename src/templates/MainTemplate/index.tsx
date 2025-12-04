@@ -6,7 +6,7 @@ import { useDatasetCsv } from '../../hooks/useDatasetCsv'
 import { DatasetCharts } from '../../components/DatasetChats'
 
 function MainTemplate() {
-  const datasetFilePath = '/src/assets/csv/internet-dataset.csv'
+  const datasetFilePath = '/assets/csv/internet-dataset.csv'
   const { data, loading, error } = useDatasetCsv(datasetFilePath)
   const { applyFilters } = useFilters()
 
