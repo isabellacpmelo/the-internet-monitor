@@ -32,7 +32,7 @@ function MainTemplate() {
         </p>
       </div>
 
-      <DatasetCharts />
+      <DatasetCharts data={data} />
 
       <Filters data={data} />
 
