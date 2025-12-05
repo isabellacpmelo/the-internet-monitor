@@ -13,6 +13,9 @@ interface DatasetTableProps {
 export function DatasetTable({ dataset }: DatasetTableProps) {
   const [sortColumn, setSortColumn] = useState<SortableColumn>('ID')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const itemsPerPage = 50
 
   const sortedDataset = useMemo(() => {
     const sortedData = [...dataset]
@@ -31,6 +34,16 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
     return sortedData
   }, [dataset, sortColumn, sortDirection])
 
+  const paginatedData = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage
+    const endIndex = startIndex + itemsPerPage
+    return sortedDataset.slice(startIndex, endIndex)
+  }, [sortedDataset, currentPage, itemsPerPage])
+
+  const totalPages = Math.ceil(sortedDataset.length / itemsPerPage)
+  const startRecord = (currentPage - 1) * itemsPerPage + 1
+  const endRecord = Math.min(currentPage * itemsPerPage, sortedDataset.length)
+
   const handleSort = (column: SortableColumn) => {
     if (sortColumn === column) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
@@ -38,6 +51,49 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
       setSortColumn(column)
       setSortDirection('asc')
     }
+    setCurrentPage(1)
+  }
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+  }
+
+  const handlePrevPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1))
+  }
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+  }
+
+  const getVisiblePages = () => {
+    const delta = 2
+    const range = []
+    const rangeWithDots = []
+
+    for (
+      let i = Math.max(2, currentPage - delta);
+      i <= Math.min(totalPages - 1, currentPage + delta);
+      i++
+    ) {
+      range.push(i)
+    }
+
+    if (currentPage - delta > 2) {
+      rangeWithDots.push(1, '...')
+    } else {
+      rangeWithDots.push(1)
+    }
+
+    rangeWithDots.push(...range)
+
+    if (currentPage + delta < totalPages - 1) {
+      rangeWithDots.push('...', totalPages)
+    } else if (totalPages > 1) {
+      rangeWithDots.push(totalPages)
+    }
+
+    return rangeWithDots
   }
 
   const downloadCSV = () => {
@@ -89,7 +145,14 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
             <i className='bi bi-table' />
             Dataset
           </h2>
-          <span className='record-count'>{sortedDataset.length} registros</span>
+          <div className='record-info'>
+            <span className='record-count'>
+              {sortedDataset.length} registros
+            </span>
+            <span className='page-info'>
+              Exibindo {startRecord}-{endRecord} de {sortedDataset.length}
+            </span>
+          </div>
         </div>
 
         <div className='table-actions'>
@@ -99,6 +162,7 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
             onClick={() => {
               setSortColumn('ID')
               setSortDirection('asc')
+              setCurrentPage(1)
             }}>
             Resetar
           </AppButton>
@@ -176,7 +240,7 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
               </tr>
             </thead>
             <tbody>
-              {sortedDataset.map((row, index) => (
+              {paginatedData.map((row, index) => (
                 <tr
                   key={row.ID}
                   className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
@@ -204,6 +268,56 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
           </table>
         </div>
       </div>
+
+      {totalPages > 1 && (
+        <div className='pagination-container'>
+          <div className='pagination-info'>
+            <span className='pagination-text'>
+              Página {currentPage} de {totalPages}
+            </span>
+          </div>
+
+          <div className='pagination-controls'>
+            <button
+              className='pagination-btn pagination-btn-nav'
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+              title='Página anterior'>
+              <i className='bi bi-chevron-left' />
+            </button>
+
+            {getVisiblePages().map((page, index) => (
+              <button
+                key={index}
+                className={`pagination-btn ${
+                  page === currentPage
+                    ? 'pagination-btn-active'
+                    : typeof page === 'number'
+                    ? 'pagination-btn-page'
+                    : 'pagination-btn-dots'
+                }`}
+                onClick={() =>
+                  typeof page === 'number' && handlePageChange(page)
+                }
+                disabled={typeof page !== 'number'}>
+                {page}
+              </button>
+            ))}
+
+            <button
+              className='pagination-btn pagination-btn-nav'
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              title='Próxima página'>
+              <i className='bi bi-chevron-right' />
+            </button>
+          </div>
+
+          <div className='items-per-page-info'>
+            <span className='items-text'>{itemsPerPage} por página</span>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
