@@ -28,7 +28,7 @@ function MainTemplate() {
   }
 
   return (
-    <div className='xl:p-16 p-4 my-10 max-w-7xl mx-auto'>
+    <main className='xl:p-16 p-4 my-10 max-w-7xl mx-auto'>
       <div className='text-center mb-8'>
         <h1 className='text-5xl font-bold text-gray-800 mb-2'>
           <i className='bi bi-router mr-3' />
@@ -76,7 +76,7 @@ function MainTemplate() {
         data={data}
         onReset={handleResetFilters}
       />
-    </div>
+    </main>
   )
 }
 

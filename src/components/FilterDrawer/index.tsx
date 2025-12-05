@@ -41,10 +41,10 @@ export function FilterDrawer({ isOpen, onClose, data }: FilterDrawerProps) {
 
       <div className='filter-drawer'>
         <div className='filter-drawer-header'>
-          <h3 className='filter-drawer-title'>
+          <div className='filter-drawer-title'>
             <i className='bi bi-funnel-fill mr-2' />
             Filtros de Dados
-          </h3>
+          </div>
           <div className='filter-drawer-actions'>
             <button
               type='button'

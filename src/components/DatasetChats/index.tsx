@@ -126,7 +126,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
               style={{ color: TECH_COLORS[index] }}>
               {item.percentage}%
             </p>
-            <p className='text-xs text-gray-500'>do total</p>
+            <p className='text-xs text-gray-700'>do total</p>
           </div>
         ))}
       </div>
@@ -233,10 +233,10 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
       </div>
 
       <div className='mb-8'>
-        <h5 className='text-center text-lg font-bold mb-4 text-gray-800'>
+        <div className='text-center text-lg font-bold mb-4 text-gray-800'>
           <i className='bi bi-calculator mr-2' />
-         Performance por Tecnologia
-        </h5>
+          Performance por Tecnologia
+        </div>
 
         <div className='grid grid-cols-2 lg:grid-cols-4 gap-4'>
           {Object.entries(stats.averagesByTechnology).map(([tech, speeds]) => (
@@ -246,14 +246,14 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
               </h5>
               <div className='space-y-2 text-center'>
                 <div>
-                  <p className='text-xs text-gray-500'>Download</p>
+                  <p className='text-xs text-gray-700'>Download</p>
                   <p className='text-lg font-bold text-blue-600'>
                     {speeds?.download ? formatNumber(speeds.download) : '0.00'}{' '}
                     Mbps
                   </p>
                 </div>
                 <div>
-                  <p className='text-xs text-gray-500'>Upload</p>
+                  <p className='text-xs text-gray-700'>Upload</p>
                   <p className='text-lg font-bold text-green-600'>
                     {speeds?.upload ? formatNumber(speeds.upload) : '0.00'} Mbps
                   </p>
@@ -363,10 +363,10 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
       </div>
 
       <div>
-        <h5 className='text-lg text-center font-bold mb-4 text-gray-800 mt-8'>
+        <div className='text-lg text-center font-bold mb-4 text-gray-800 mt-8'>
           <i className='bi bi-calculator mr-2' />
-         Performance por Localização
-        </h5>
+          Performance por Localização
+        </div>
         <div className='grid grid-cols-2 gap-6'>
           {Object.entries(stats.averagesByLocation).map(
             ([location, speeds]) => (
@@ -504,10 +504,10 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
       </div>
 
       <div className='mb-8'>
-        <h5 className='text-center text-lg font-bold mb-4 text-gray-800'>
+        <div className='text-center text-lg font-bold mb-4 text-gray-800'>
           <i className='bi bi-calculator mr-2' />
-         Performance por Dependência Administrativa
-        </h5>
+          Performance por Dependência Administrativa
+        </div>
 
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-4'>
           {Object.entries(stats.averagesByAdministration).map(
@@ -518,7 +518,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
                 </h5>
                 <div className='space-y-2 text-center'>
                   <div>
-                    <p className='text-xs text-gray-500'>Download</p>
+                    <p className='text-xs text-gray-700'>Download</p>
                     <p className='text-lg font-bold text-blue-600'>
                       {speeds?.download
                         ? formatNumber(speeds.download)
@@ -527,7 +527,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
                     </p>
                   </div>
                   <div>
-                    <p className='text-xs text-gray-500'>Upload</p>
+                    <p className='text-xs text-gray-700'>Upload</p>
                     <p className='text-lg font-bold text-green-600'>
                       {speeds?.upload ? formatNumber(speeds.upload) : '0.00'}{' '}
                       Mbps
