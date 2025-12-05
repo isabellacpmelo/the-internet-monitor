@@ -88,7 +88,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
   return (
     <div className=''>
       <h2 className='text-2xl font-bold mb-8 text-center text-gray-800'>
-        <i className='bi bi-bar-chart-fill mr-3' />
+        <i className='bi bi-pc-display mr-3' />
         Velocidades de Internet por Tipo de Tecnologia
       </h2>
 
@@ -107,11 +107,11 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
                 <i
                   className={`bi ${
                     item.name === 'Fibra'
-                      ? 'bi-ethernet'
-                      : item.name === 'Radio'
-                      ? 'bi-broadcast'
-                      : item.name === 'Cable Modem'
                       ? 'bi-router'
+                      : item.name === 'Radio'
+                      ? 'bi-broadcast-pin'
+                      : item.name === 'Cable Modem'
+                      ? 'bi-ethernet'
                       : 'bi-globe'
                   } mr-2`}
                 />
@@ -231,7 +231,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
       </div>
 
       <h2 className='text-2xl font-bold mb-8 text-center text-gray-800'>
-        <i className='bi bi-geo-alt-fill mr-3' />
+        <i className='bi bi-geo mr-3' />
         Comparativo de Velocidades por Região
       </h2>
 
@@ -329,7 +329,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
       </div>
 
       <h2 className='text-2xl font-bold mb-8 text-center text-gray-800'>
-        <i className='bi bi-building mr-3' />
+        <i className='bi bi-buildings mr-3' />
         Velocidades por Dependência Administrativa
       </h2>
 
@@ -568,14 +568,19 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
                         Velocidades
                       </p>
                       <p className='text-blue-600'>
-                        📥 Download: {data.download} Mbps
+                        <i className='bi bi-download' /> Download:{' '}
+                        {data.download} Mbps
                       </p>
                       <p className='text-green-600'>
-                        📤 Upload: {data.upload} Mbps
+                        <i className='bi bi-upload' /> Upload: {data.upload}{' '}
+                        Mbps
                       </p>
-                      <p className='text-orange-600'>📊 Proporção: {ratio}%</p>
+                      <p className='text-orange-600'>
+                        <i className='bi bi-calculator' /> Proporção: {ratio}%
+                      </p>
                       <p className='text-gray-600'>
-                        ⚡ Qualidade: {efficiency}
+                        <i className='bi bi-lightning-charge' /> Qualidade:{' '}
+                        {efficiency}
                       </p>
                     </div>
                   )
@@ -585,7 +590,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
             />
             <Legend
               wrapperStyle={{
-                paddingTop: '24px',
+                paddingTop: '16px',
                 fontWeight: '500',
               }}
             />
@@ -602,17 +607,16 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
         </ResponsiveContainer>
       </div>
 
-      <div>
-        <h3 className='text-lg font-bold text-gray-800 mb-4 text-center'>
-          <i className='bi bi-info-circle mr-2' />
-          Análise de Correlação com Linhas de Referência
+      <div className='flex flex-col justify-between w-full'>
+        <h3 className='text-lg font-bold text-gray-800 my-4 text-center'>
+          <i className='bi bi-lightbulb mr-2' />
+          Sobre o Gráfico de Dispersão
         </h3>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-700'>
-          <div>
-            <h4 className='font-semibold mb-2'>Linhas de Referência:</h4>
+        <div className='text-sm  text-gray-700 max-w-3xl mx-auto flex flex-col md:flex-row justify-between gap-6'>
+          <div className=''>
             <ul className='space-y-1'>
               <li>
-                <span className='w-3 h-1 bg-orange-500 inline-block mr-2'></span>
+                <span className='w-3 h-1 bg-orange-300 inline-block mr-2'></span>
                 Laranja: Tendência real dos dados (regressão linear)
               </li>
               <li>
@@ -622,31 +626,23 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
             </ul>
           </div>
           <div>
-            <h4 className='font-semibold mb-2'>Como interpretar:</h4>
             <ul className='space-y-1'>
               <li>
-                • Pontos acima da linha laranja = upload melhor que a média
-              </li>
-              <li>• Pontos próximos à linha laranja = performance típica</li>
-              <li>
-                • Pontos abaixo da linha laranja = upload menor que a tendência
+                • <span className='font-bold text-green-900'>Excelente:</span>{' '}
+                Download &gt;100 Mbps e Upload &gt;50 Mbps
               </li>
               <li>
-                • Dispersão vertical = variabilidade na qualidade do upload
+                • <span className='font-bold text-yellow-500'>Boa:</span>{' '}
+                Download &gt;100 Mbps e Upload &gt;50 Mbps
               </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className='font-semibold mb-2'>Qualidade da conexão:</h4>
-            <ul className='space-y-1'>
               <li>
-                • ✅ Excelente: Download &gt;100 Mbps e Upload &gt;50 Mbps
+                • <span className='font-bold text-amber-600'>Limitada:</span>
+                Download &gt;100 Mbps mas Upload &lt;25 Mbps
               </li>
-              <li>• ☑️ Boa: Download &gt;100 Mbps e Upload &gt;25 Mbps</li>
               <li>
-                • ‼️ Limitada: Download &gt;100 Mbps mas Upload &lt;25 Mbps
+                • <span className='font-bold text-red-500'>Baixa:</span>{' '}
+                Download &lt;100 Mbps
               </li>
-              <li>• ❌ Baixa: Download &lt;100 Mbps</li>
             </ul>
           </div>
         </div>
