@@ -57,14 +57,12 @@ function MainTemplate() {
             title='Resetar todos os filtros'>
             Resetar Filtros
           </AppButton>
-          <button
-            type='button'
+          <AppButton
+            icon={<i className='bi bi-sliders' />}
             onClick={openDrawer}
-            className='flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors'
-            title='Abrir painel de filtros'>
-            <i className='bi bi-sliders' />
-            <span>Filtros</span>
-          </button>
+            title='Abrir menu de filtros'>
+            Filtros
+          </AppButton>
         </div>
       </div>
 
