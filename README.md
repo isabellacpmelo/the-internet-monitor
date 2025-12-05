@@ -4,6 +4,13 @@
 
 Esse repositório consiste em uma aplicação web moderna para análise abrangente de dados de velocidade de internet, construída com React, TypeScript, Tailwind CSS e Recharts.
 
+<div align="center">
+<a href="https://internet-monitor.netlify.app/"><img height="355em" alt="The internet monitor" src="https://i.imgur.com/hSXyftf.gif" /></a>
+</br>
+</br>
+<a href="https://internet-monitor.netlify.app/">Click here to access the website</a>
+</div>
+
 ## Visão Geral
 
 O **Internet Monitor** é uma ferramenta de análise de dados que permite visualizar e compreender padrões de conectividade à internet através de dashboards interativos, gráficos dinâmicos e tabelas paginadas com sistema de filtros avançado. A aplicação consome um dataset CSV contendo informações detalhadas sobre velocidades de download e upload, tipo de localização, tecnologias utilizadas e dependências administrativas.
@@ -175,3 +182,13 @@ src/
 - **Acessibilidade**: Cuidado com contraste e navegação por teclado, além de labels descritivos em itens interativos ou que não possuem textos
 
 ## Decisões de Design e Arquitetura
+
+## Screenshots
+
+### Desktop
+
+<img height="1500em" alt="Desktop Print Screen" src="https://i.imgur.com/uA2h6xc.png" />
+
+### Mobile
+
+<img height="2000em" alt="Mobile Print Screen" src="https://i.imgur.com/dVwBUuA.png" />
