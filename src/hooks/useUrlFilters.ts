@@ -25,22 +25,26 @@ export function useUrlFilters() {
       const localizacao = searchParams.get(PARAM_KEYS.LOCALIZACAO)
       const tipoTecnologia = searchParams.get(PARAM_KEYS.TIPO_TECNOLOGIA)
 
-      return {
+      const result = {
         downloadRange: {
-          min: downloadMin
-            ? parseFloat(downloadMin)
-            : defaultFilters.downloadRange.min,
-          max: downloadMax
-            ? parseFloat(downloadMax)
-            : defaultFilters.downloadRange.max,
+          min:
+            downloadMin && !isNaN(parseFloat(downloadMin))
+              ? parseFloat(downloadMin)
+              : defaultFilters.downloadRange.min,
+          max:
+            downloadMax && !isNaN(parseFloat(downloadMax))
+              ? parseFloat(downloadMax)
+              : defaultFilters.downloadRange.max,
         },
         uploadRange: {
-          min: uploadMin
-            ? parseFloat(uploadMin)
-            : defaultFilters.uploadRange.min,
-          max: uploadMax
-            ? parseFloat(uploadMax)
-            : defaultFilters.uploadRange.max,
+          min:
+            uploadMin && !isNaN(parseFloat(uploadMin))
+              ? parseFloat(uploadMin)
+              : defaultFilters.uploadRange.min,
+          max:
+            uploadMax && !isNaN(parseFloat(uploadMax))
+              ? parseFloat(uploadMax)
+              : defaultFilters.uploadRange.max,
         },
         dependenciaAdm: dependenciaAdm
           ? dependenciaAdm.split(',').filter(Boolean)
@@ -52,6 +56,8 @@ export function useUrlFilters() {
           ? tipoTecnologia.split(',').filter(Boolean)
           : defaultFilters.tipoTecnologia,
       }
+
+      return result
     },
     [searchParams]
   )
