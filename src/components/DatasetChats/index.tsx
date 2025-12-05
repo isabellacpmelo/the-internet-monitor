@@ -663,12 +663,12 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
                   const data = payload[0].payload
                   const ratio = ((data.upload / data.download) * 100).toFixed(1)
                   const efficiency =
-                    data.download > 100
-                      ? data.upload > 50
-                        ? 'Excelente'
-                        : data.upload > 25
-                        ? 'Boa'
-                        : 'Limitada'
+                    data.download > 300 && data.upload > 50
+                      ? 'Excelente'
+                      : data.download > 100 && data.upload > 25
+                      ? 'Boa'
+                      : data.download > 50 && data.upload > 10
+                      ? 'Regular'
                       : 'Baixa'
                   return (
                     <div className='bg-white p-3 border rounded shadow-lg'>
@@ -736,20 +736,20 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
           <div>
             <ul className='space-y-1'>
               <li>
-                • <span className='font-bold text-green-900'>Excelente:</span>{' '}
-                Download &gt;100 Mbps e Upload &gt;50 Mbps
+                • <span className='font-bold text-green-600'>Excelente:</span>{' '}
+                Download &gt;300 Mbps e Upload &gt;50 Mbps
               </li>
               <li>
-                • <span className='font-bold text-yellow-500'>Boa:</span>{' '}
-                Download &gt;100 Mbps e Upload &gt;50 Mbps
+                • <span className='font-bold text-blue-600'>Boa:</span> Download
+                &gt;100 Mbps e Upload &gt;25 Mbps
               </li>
               <li>
-                • <span className='font-bold text-amber-600'>Limitada:</span>
-                Download &gt;100 Mbps mas Upload &lt;25 Mbps
+                • <span className='font-bold text-yellow-600'>Regular:</span>{' '}
+                Download &gt;50 Mbps e Upload &gt;10 Mbps
               </li>
               <li>
-                • <span className='font-bold text-red-500'>Baixa:</span>{' '}
-                Download &lt;100 Mbps
+                • <span className='font-bold text-red-500'>Baixa:</span> Demais
+                conexões
               </li>
             </ul>
           </div>
