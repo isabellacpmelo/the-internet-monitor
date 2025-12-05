@@ -433,170 +433,174 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
         Relação Download vs Upload
       </h2>
 
-      <ResponsiveContainer width='100%' height={500}>
-        <ScatterChart margin={{ top: 30, right: 30, bottom: 50, left: 50 }}>
-          <CartesianGrid strokeDasharray='3 3' opacity={0.3} />
-          <XAxis
-            dataKey='download'
-            type='number'
-            domain={['dataMin', 'dataMax']}
-            label={{
-              value: 'Download (Mbps)',
-              position: 'insideBottom',
-              offset: -10,
-              style: {
-                textAnchor: 'middle',
-                fill: '#374151',
-                fontWeight: '500',
-              },
-            }}
-            tick={{ fill: '#374151' }}
-          />
-          <YAxis
-            dataKey='upload'
-            type='number'
-            domain={['dataMin', 'dataMax']}
-            label={{
-              value: 'Upload (Mbps)',
-              angle: -90,
-              position: 'insideLeft',
-              style: {
-                textAnchor: 'middle',
-                fill: '#374151',
-                fontWeight: '500',
-              },
-            }}
-            tick={{ fill: '#374151' }}
-          />
+      <div className='max-w-3xl'>
+        <ResponsiveContainer width='100%' height={300} className='text-sm'>
+          <ScatterChart>
+            <CartesianGrid strokeDasharray='3 3' opacity={0.3} />
+            <XAxis
+              dataKey='download'
+              type='number'
+              domain={['dataMin', 'dataMax']}
+              label={{
+                value: 'Download (Mbps)',
+                position: 'insideBottom',
+                offset: -10,
+                style: {
+                  textAnchor: 'middle',
+                  fill: '#374151',
+                  fontWeight: '500',
+                },
+              }}
+              tick={{ fill: '#374151' }}
+            />
+            <YAxis
+              dataKey='upload'
+              type='number'
+              domain={['dataMin', 'dataMax']}
+              label={{
+                value: 'Upload (Mbps)',
+                angle: -90,
+                position: 'insideLeft',
+                style: {
+                  textAnchor: 'middle',
+                  fill: '#374151',
+                  fontWeight: '500',
+                },
+              }}
+              tick={{ fill: '#374151' }}
+            />
 
-          <ReferenceLine
-            segment={(() => {
-              const n = scatterData.length
-              const sumX = scatterData.reduce((sum, d) => sum + d.download, 0)
-              const sumY = scatterData.reduce((sum, d) => sum + d.upload, 0)
-              const sumXY = scatterData.reduce(
-                (sum, d) => sum + d.download * d.upload,
-                0
-              )
-              const sumXX = scatterData.reduce(
-                (sum, d) => sum + d.download * d.download,
-                0
-              )
-
-              const slope =
-                (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX)
-              const intercept = (sumY - slope * sumX) / n
-
-              const minX = Math.min(...scatterData.map((d) => d.download))
-              const maxX = Math.max(...scatterData.map((d) => d.download))
-
-              return [
-                { x: minX, y: Math.max(0, slope * minX + intercept) },
-                { x: maxX, y: slope * maxX + intercept },
-              ]
-            })()}
-            stroke='#f59e0b'
-            strokeWidth={3}
-          />
-
-          <ReferenceLine
-            x={100}
-            stroke='#9ca3af'
-            strokeDasharray='2 2'
-            strokeWidth={1}
-            opacity={0.5}
-          />
-          <ReferenceLine
-            x={300}
-            stroke='#9ca3af'
-            strokeDasharray='2 2'
-            strokeWidth={1}
-            opacity={0.5}
-          />
-          <ReferenceLine
-            x={500}
-            stroke='#9ca3af'
-            strokeDasharray='2 2'
-            strokeWidth={1}
-            opacity={0.5}
-          />
-          <ReferenceLine
-            y={25}
-            stroke='#9ca3af'
-            strokeDasharray='2 2'
-            strokeWidth={1}
-            opacity={0.5}
-          />
-          <ReferenceLine
-            y={50}
-            stroke='#9ca3af'
-            strokeDasharray='2 2'
-            strokeWidth={1}
-            opacity={0.5}
-          />
-          <ReferenceLine
-            y={100}
-            stroke='#9ca3af'
-            strokeDasharray='2 2'
-            strokeWidth={1}
-            opacity={0.5}
-          />
-          <Tooltip
-            cursor={{ strokeDasharray: '3 3' }}
-            contentStyle={{
-              backgroundColor: '#f9fafb',
-              border: '1px solid #d1d5db',
-              borderRadius: '8px',
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-            }}
-            content={({ active, payload }) => {
-              if (active && payload && payload.length) {
-                const data = payload[0].payload
-                const ratio = ((data.upload / data.download) * 100).toFixed(1)
-                const efficiency =
-                  data.download > 100
-                    ? data.upload > 50
-                      ? 'Excelente'
-                      : data.upload > 25
-                      ? 'Boa'
-                      : 'Limitada'
-                    : 'Baixa'
-                return (
-                  <div className='bg-white p-3 border rounded shadow-lg'>
-                    <p className='font-semibold text-gray-800 mb-2'>
-                      Velocidades
-                    </p>
-                    <p className='text-blue-600'>
-                      📥 Download: {data.download} Mbps
-                    </p>
-                    <p className='text-green-600'>
-                      📤 Upload: {data.upload} Mbps
-                    </p>
-                    <p className='text-orange-600'>📊 Proporção: {ratio}%</p>
-                    <p className='text-gray-600'>⚡ Qualidade: {efficiency}</p>
-                  </div>
+            <ReferenceLine
+              segment={(() => {
+                const n = scatterData.length
+                const sumX = scatterData.reduce((sum, d) => sum + d.download, 0)
+                const sumY = scatterData.reduce((sum, d) => sum + d.upload, 0)
+                const sumXY = scatterData.reduce(
+                  (sum, d) => sum + d.download * d.upload,
+                  0
                 )
-              }
-              return null
-            }}
-          />
-          <Legend
-            wrapperStyle={{
-              paddingTop: '16px',
-              fontWeight: '500',
-            }}
-          />
-          <Scatter
-            data={scatterData}
-            fill='#6366f1'
-            name='Conexões'
-            r={5}
-            fillOpacity={0.7}
-            stroke='#4f46e5'
-            strokeWidth={1}
-          />
-        </ScatterChart>
-      </ResponsiveContainer>
+                const sumXX = scatterData.reduce(
+                  (sum, d) => sum + d.download * d.download,
+                  0
+                )
+
+                const slope =
+                  (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX)
+                const intercept = (sumY - slope * sumX) / n
+
+                const minX = Math.min(...scatterData.map((d) => d.download))
+                const maxX = Math.max(...scatterData.map((d) => d.download))
+
+                return [
+                  { x: minX, y: Math.max(0, slope * minX + intercept) },
+                  { x: maxX, y: slope * maxX + intercept },
+                ]
+              })()}
+              stroke='#f59e0b'
+              strokeWidth={3}
+            />
+
+            <ReferenceLine
+              x={100}
+              stroke='#9ca3af'
+              strokeDasharray='2 2'
+              strokeWidth={1}
+              opacity={0.5}
+            />
+            <ReferenceLine
+              x={300}
+              stroke='#9ca3af'
+              strokeDasharray='2 2'
+              strokeWidth={1}
+              opacity={0.5}
+            />
+            <ReferenceLine
+              x={500}
+              stroke='#9ca3af'
+              strokeDasharray='2 2'
+              strokeWidth={1}
+              opacity={0.5}
+            />
+            <ReferenceLine
+              y={25}
+              stroke='#9ca3af'
+              strokeDasharray='2 2'
+              strokeWidth={1}
+              opacity={0.5}
+            />
+            <ReferenceLine
+              y={50}
+              stroke='#9ca3af'
+              strokeDasharray='2 2'
+              strokeWidth={1}
+              opacity={0.5}
+            />
+            <ReferenceLine
+              y={100}
+              stroke='#9ca3af'
+              strokeDasharray='2 2'
+              strokeWidth={1}
+              opacity={0.5}
+            />
+            <Tooltip
+              cursor={{ strokeDasharray: '3 3' }}
+              contentStyle={{
+                backgroundColor: '#f9fafb',
+                border: '1px solid #d1d5db',
+                borderRadius: '8px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              }}
+              content={({ active, payload }) => {
+                if (active && payload && payload.length) {
+                  const data = payload[0].payload
+                  const ratio = ((data.upload / data.download) * 100).toFixed(1)
+                  const efficiency =
+                    data.download > 100
+                      ? data.upload > 50
+                        ? 'Excelente'
+                        : data.upload > 25
+                        ? 'Boa'
+                        : 'Limitada'
+                      : 'Baixa'
+                  return (
+                    <div className='bg-white p-3 border rounded shadow-lg'>
+                      <p className='font-semibold text-gray-800 mb-2'>
+                        Velocidades
+                      </p>
+                      <p className='text-blue-600'>
+                        📥 Download: {data.download} Mbps
+                      </p>
+                      <p className='text-green-600'>
+                        📤 Upload: {data.upload} Mbps
+                      </p>
+                      <p className='text-orange-600'>📊 Proporção: {ratio}%</p>
+                      <p className='text-gray-600'>
+                        ⚡ Qualidade: {efficiency}
+                      </p>
+                    </div>
+                  )
+                }
+                return null
+              }}
+            />
+            <Legend
+              wrapperStyle={{
+                paddingTop: '16px',
+                fontWeight: '500',
+              }}
+            />
+            <Scatter
+              data={scatterData}
+              fill='#6366f1'
+              name='Conexões'
+              r={5}
+              fillOpacity={0.7}
+              stroke='#4f46e5'
+              strokeWidth={1}
+            />
+          </ScatterChart>
+        </ResponsiveContainer>
+      </div>
 
       <div>
         <h3 className='text-lg font-bold text-gray-800 mb-4 text-center'>
