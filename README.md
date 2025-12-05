@@ -190,6 +190,19 @@ A ideia central foi criar componentes altamente configuráveis, como gráficos c
 
 Outro ponto, é a divisão entre as seções exibidas para o usuário que seguiram o fluxo de mostrar os dados de acordo com o tipo de distribuição, começando com gráficos de pizza para uma visão geral, seguido por gráficos de barras para comparações mais detalhadas, e finalizando com o gráfico de dispersão para análises de correlação.
 
+## Deploy e Hospedagem
+
+O **Internet Monitor** está hospedado no [Netlify](https://www.netlify.com/), proporcionando alta performance, disponibilidade e integração contínua com o GitHub.
+
+### **Informações do Deploy:**
+
+- **URL de Produção**: [https://internet-monitor.netlify.app/](https://internet-monitor.netlify.app/)
+- **Status do Deploy**: [![Netlify Status](https://api.netlify.com/api/v1/badges/99125905-76db-46c6-a6e6-2af80ee42b96/deploy-status)](https://app.netlify.com/projects/internet-monitor/deploys)
+- **Deploy Automático**: Configurado para deploy automático a partir da branch `main`
+- **HTTPS**: Automaticamente provisionado com certificado SSL gratuito disponibilizado pelo Netlify
+
+O Netlify foi escolhido pela sua facilidade de integração, performance excepcional e recursos robustos para aplicações React/Vite.
+
 ## Screenshots
 
 ### Desktop
