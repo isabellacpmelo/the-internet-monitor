@@ -433,7 +433,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
         Relação Download vs Upload
       </h2>
 
-      <div className='max-w-3xl'>
+      <div className='max-w-3xl mx-auto'>
         <ResponsiveContainer width='100%' height={300} className='text-sm'>
           <ScatterChart>
             <CartesianGrid strokeDasharray='3 3' opacity={0.3} />
@@ -444,7 +444,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
               label={{
                 value: 'Download (Mbps)',
                 position: 'insideBottom',
-                offset: -10,
+                offset: -5,
                 style: {
                   textAnchor: 'middle',
                   fill: '#374151',
@@ -585,7 +585,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
             />
             <Legend
               wrapperStyle={{
-                paddingTop: '16px',
+                paddingTop: '24px',
                 fontWeight: '500',
               }}
             />
