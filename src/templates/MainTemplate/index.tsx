@@ -27,7 +27,7 @@ function MainTemplate() {
   }
 
   return (
-    <div className='xl:p-16 p-4 mb-8'>
+    <div className='xl:p-16 p-4 my-10'>
       <div className='text-center mb-8'>
         <h1 className='text-5xl font-bold text-gray-800 mb-2'>
           <i className='bi bi-router mr-3' />
