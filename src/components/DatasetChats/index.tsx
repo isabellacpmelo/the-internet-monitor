@@ -1,19 +1,18 @@
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
   ResponsiveContainer,
   ScatterChart,
   Scatter,
   ReferenceLine,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
 } from 'recharts'
 import { useDatasetStats } from '../../hooks/DatasetStats'
 import type { InternetData } from '../../types/filters'
 import { CustomPieChart } from '../CustomPieChart'
+import { CustomBarChart } from '../CustomBarChart'
 
 interface DatasetChartsProps {
   data: InternetData[]
@@ -137,60 +136,13 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
           width={300}
           height={300}
         />
-        <ResponsiveContainer width={340} height={300}>
-          <BarChart data={speedByTechData}>
-            <CartesianGrid strokeDasharray='3 3' opacity={0.3} />
-            <XAxis
-              dataKey='tecnologia'
-              angle={-45}
-              textAnchor='end'
-              height={50}
-              fontSize={13}
-              fontWeight='500'
-              tick={{ fill: '#374151' }}
-            />
-            <YAxis
-              label={{
-                value: 'Velocidade (Mbps)',
-                angle: -90,
-                position: 'insideLeft',
-                style: {
-                  textAnchor: 'middle',
-                  fill: '#374151',
-                  fontWeight: '500',
-                },
-              }}
-              tick={{ fill: '#374151' }}
-            />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#f9fafb',
-                border: '1px solid #d1d5db',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              }}
-              labelStyle={{ color: '#1f2937', fontWeight: '600' }}
-            />
-            <Legend
-              wrapperStyle={{
-                paddingTop: '16px',
-                fontWeight: '500',
-              }}
-            />
-            <Bar
-              dataKey='download'
-              fill='#1a5a8fff'
-              name='Download'
-              radius={[4, 4, 0, 0]}
-            />
-            <Bar
-              dataKey='upload'
-              fill='#6d346fff'
-              name='Upload'
-              radius={[4, 4, 0, 0]}
-            />
-          </BarChart>
-        </ResponsiveContainer>
+        <CustomBarChart
+          data={speedByTechData}
+          xAxisKey='tecnologia'
+          xAxisAngle={-45}
+          width={340}
+          height={300}
+        />
       </div>
 
       <div className='mb-8'>
@@ -238,57 +190,12 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
           height={300}
         />
 
-        <ResponsiveContainer width={340} height={300}>
-          <BarChart data={speedByLocationData}>
-            <CartesianGrid strokeDasharray='3 3' opacity={0.3} />
-            <XAxis
-              dataKey='regiao'
-              fontSize={13}
-              fontWeight='500'
-              tick={{ fill: '#374151' }}
-            />
-            <YAxis
-              label={{
-                value: 'Velocidade (Mbps)',
-                angle: -90,
-                position: 'insideLeft',
-                style: {
-                  textAnchor: 'middle',
-                  fill: '#374151',
-                  fontWeight: '500',
-                },
-              }}
-              tick={{ fill: '#374151' }}
-            />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#f9fafb',
-                border: '1px solid #d1d5db',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              }}
-              labelStyle={{ color: '#1f2937', fontWeight: '600' }}
-            />
-            <Legend
-              wrapperStyle={{
-                paddingTop: '16px',
-                fontWeight: '500',
-              }}
-            />
-            <Bar
-              dataKey='download'
-              fill='#1a5a8fff'
-              name='Download'
-              radius={[4, 4, 0, 0]}
-            />
-            <Bar
-              dataKey='upload'
-              fill='#6d346fff'
-              name='Upload'
-              radius={[4, 4, 0, 0]}
-            />
-          </BarChart>
-        </ResponsiveContainer>
+        <CustomBarChart
+          data={speedByLocationData}
+          xAxisKey='regiao'
+          width={340}
+          height={300}
+        />
       </div>
 
       <div>
@@ -344,60 +251,14 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
           width={300}
           height={300}
         />
-        <ResponsiveContainer width={340} height={300}>
-          <BarChart data={speedByAdminData}>
-            <CartesianGrid strokeDasharray='3 3' opacity={0.3} />
-            <XAxis
-              dataKey='dependencia'
-              angle={-45}
-              textAnchor='end'
-              height={80}
-              fontSize={13}
-              fontWeight='500'
-              tick={{ fill: '#374151' }}
-            />
-            <YAxis
-              label={{
-                value: 'Velocidade (Mbps)',
-                angle: -90,
-                position: 'insideLeft',
-                style: {
-                  textAnchor: 'middle',
-                  fill: '#374151',
-                  fontWeight: '500',
-                },
-              }}
-              tick={{ fill: '#374151' }}
-            />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#f9fafb',
-                border: '1px solid #d1d5db',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              }}
-              labelStyle={{ color: '#1f2937', fontWeight: '600' }}
-            />
-            <Legend
-              wrapperStyle={{
-                paddingTop: '0px',
-                fontWeight: '500',
-              }}
-            />
-            <Bar
-              dataKey='download'
-              fill='#1a5a8fff'
-              name='Download'
-              radius={[4, 4, 0, 0]}
-            />
-            <Bar
-              dataKey='upload'
-              fill='#6d346fff'
-              name='Upload'
-              radius={[4, 4, 0, 0]}
-            />
-          </BarChart>
-        </ResponsiveContainer>
+        <CustomBarChart
+          data={speedByAdminData}
+          xAxisKey='dependencia'
+          xAxisAngle={-45}
+          xAxisHeight={80}
+          width={340}
+          height={300}
+        />
       </div>
 
       <div className='mb-8'>
