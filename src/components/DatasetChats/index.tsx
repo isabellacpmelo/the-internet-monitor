@@ -96,11 +96,11 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
             className='text-center p-4 rounded-lg'
             style={{ backgroundColor: TECH_COLORS[index] + '20' }}>
             <div className='flex items-center justify-center gap-2 mb-2'>
-              <span
-                className='w-2 h-2 rounded-full mb-4 animate-ping'
-                style={{ backgroundColor: TECH_COLORS[index] }}
-              />
-              <h3 className='text-lg font-bold text-gray-800'>
+              <h3 className='text-lg font-bold text-gray-800 flex items-center'>
+                <div
+                  className='h-2 w-2 rounded-full animate-ping mb-1 mr-1'
+                  style={{ backgroundColor: TECH_COLORS[index] }}
+                />
                 <i
                   className={`bi ${
                     item.name === 'Fibra'
