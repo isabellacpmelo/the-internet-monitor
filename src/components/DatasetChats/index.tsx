@@ -234,7 +234,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
 
       <div className='mb-8'>
         <h5 className='text-center text-lg font-bold mb-4 text-gray-800'>
-          <i className='bi bi-pc-display mr-2' />
+          <i className='bi bi-calculator mr-2' />
           Médias de Velocidade por Tecnologia
         </h5>
 
@@ -364,13 +364,13 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
 
       <div>
         <h5 className='text-lg text-center font-bold mb-4 text-gray-800 mt-8'>
-          <i className='bi bi-geo mr-2' />
+          <i className='bi bi-calculator mr-2' />
           Médias de Velocidade por Localização
         </h5>
         <div className='grid grid-cols-2 gap-6'>
           {Object.entries(stats.averagesByLocation).map(
             ([location, speeds]) => (
-              <div key={location} className='p-6 border shadow-sm'>
+              <div key={location} className='p-6 border rounded-lg'>
                 <h5 className='font-semibold text-gray-800 mb-4 flex items-center justify-center'>
                   <i
                     className={`bi ${
@@ -501,6 +501,43 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
             />
           </BarChart>
         </ResponsiveContainer>
+      </div>
+
+      <div className='mb-8'>
+        <h5 className='text-center text-lg font-bold mb-4 text-gray-800'>
+          <i className='bi bi-calculator mr-2' />
+          Médias de Velocidade por Dependência Administrativa
+        </h5>
+
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-4'>
+          {Object.entries(stats.averagesByAdministration).map(
+            ([tech, speeds]) => (
+              <div key={tech} className='p-4 rounded-lg border'>
+                <h5 className='font-semibold text-gray-800 mb-3 text-center'>
+                  {tech}
+                </h5>
+                <div className='space-y-2 text-center'>
+                  <div>
+                    <p className='text-xs text-gray-500'>Download</p>
+                    <p className='text-lg font-bold text-blue-600'>
+                      {speeds?.download
+                        ? formatNumber(speeds.download)
+                        : '0.00'}{' '}
+                      Mbps
+                    </p>
+                  </div>
+                  <div>
+                    <p className='text-xs text-gray-500'>Upload</p>
+                    <p className='text-lg font-bold text-green-600'>
+                      {speeds?.upload ? formatNumber(speeds.upload) : '0.00'}{' '}
+                      Mbps
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )
+          )}
+        </div>
       </div>
 
       <h2 className='text-2xl font-bold mb-8 text-center text-gray-800'>
