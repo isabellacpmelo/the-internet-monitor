@@ -82,18 +82,17 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
   }
 
   return (
-    <div>
-      <h2 className='text-2xl font-bold my-8 text-center text-gray-800'>
-        <i className='bi bi-clipboard-data mr-3' />
-        Dataset ({sortedDataset.length} registros)
-      </h2>
-      <div className='w-full flex justify-end items-center my-4'>
-        <div className='flex gap-3'>
-          <AppButton
-            icon={<i className='bi bi-download' />}
-            onClick={downloadCSV}>
-            Baixar CSV
-          </AppButton>
+    <div className='dataset-table-wrapper'>
+      <div className='table-header'>
+        <div className='table-title-section'>
+          <h2 className='table-title'>
+            <i className='bi bi-table' />
+            Dataset
+          </h2>
+          <span className='record-count'>{sortedDataset.length} registros</span>
+        </div>
+
+        <div className='table-actions'>
           <AppButton
             variant='outlined'
             icon={<i className='bi bi-arrow-counterclockwise' />}
@@ -101,75 +100,109 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
               setSortColumn('ID')
               setSortDirection('asc')
             }}>
-            Resetar ordenação
+            Resetar
+          </AppButton>
+          <AppButton
+            icon={<i className='bi bi-download' />}
+            onClick={downloadCSV}>
+            Exportar CSV
           </AppButton>
         </div>
       </div>
-      <div className='dataset-table-container'>
-        <table className='dataset-table'>
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>
-                Download (Mbps)
-                <TableHeadButton
-                  column='Download'
-                  onSort={handleSort}
-                  currentSortColumn={sortColumn}
-                  sortDirection={sortDirection}
-                />
-              </th>
-              <th>
-                Upload (Mbps)
-                <TableHeadButton
-                  column='Upload'
-                  onSort={handleSort}
-                  currentSortColumn={sortColumn}
-                  sortDirection={sortDirection}
-                />
-              </th>
-              <th>
-                Administração
-                <TableHeadButton
-                  column='Dependencia_Adm'
-                  onSort={handleSort}
-                  currentSortColumn={sortColumn}
-                  sortDirection={sortDirection}
-                />
-              </th>
-              <th>
-                Localização
-                <TableHeadButton
-                  column='Localizacao'
-                  onSort={handleSort}
-                  currentSortColumn={sortColumn}
-                  sortDirection={sortDirection}
-                />
-              </th>
-              <th>
-                Tecnologia
-                <TableHeadButton
-                  column='Tipo_Tecnologia'
-                  onSort={handleSort}
-                  currentSortColumn={sortColumn}
-                  sortDirection={sortDirection}
-                />
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedDataset.map((row) => (
-              <tr key={row.ID}>
-                <td>{row.ID}</td>
-                <td>{row.Download}</td>
-                <td>{row.Upload}</td>
-                <td>{row.Dependencia_Adm}</td>
-                <td>{row.Localizacao}</td>
-                <td>{row.Tipo_Tecnologia}</td>
+
+      <div className='table-container'>
+        <div className='table-scroll-wrapper'>
+          <table className='modern-table'>
+            <thead>
+              <tr>
+                <th className='id-column'>ID</th>
+                <th className='sortable-column'>
+                  <div className='column-header'>
+                    <span>Download</span>
+                    <small>(Mbps)</small>
+                    <TableHeadButton
+                      column='Download'
+                      onSort={handleSort}
+                      currentSortColumn={sortColumn}
+                      sortDirection={sortDirection}
+                    />
+                  </div>
+                </th>
+                <th className='sortable-column'>
+                  <div className='column-header'>
+                    <span>Upload</span>
+                    <small>(Mbps)</small>
+                    <TableHeadButton
+                      column='Upload'
+                      onSort={handleSort}
+                      currentSortColumn={sortColumn}
+                      sortDirection={sortDirection}
+                    />
+                  </div>
+                </th>
+                <th className='sortable-column'>
+                  <div className='column-header'>
+                    <span>Administração</span>
+                    <TableHeadButton
+                      column='Dependencia_Adm'
+                      onSort={handleSort}
+                      currentSortColumn={sortColumn}
+                      sortDirection={sortDirection}
+                    />
+                  </div>
+                </th>
+                <th className='sortable-column'>
+                  <div className='column-header'>
+                    <span>Localização</span>
+                    <TableHeadButton
+                      column='Localizacao'
+                      onSort={handleSort}
+                      currentSortColumn={sortColumn}
+                      sortDirection={sortDirection}
+                    />
+                  </div>
+                </th>
+                <th className='sortable-column'>
+                  <div className='column-header'>
+                    <span>Tecnologia</span>
+                    <TableHeadButton
+                      column='Tipo_Tecnologia'
+                      onSort={handleSort}
+                      currentSortColumn={sortColumn}
+                      sortDirection={sortDirection}
+                    />
+                  </div>
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {sortedDataset.map((row, index) => (
+                <tr
+                  key={row.ID}
+                  className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
+                  <td>
+                    <span>{row.ID}</span>
+                  </td>
+                  <td>
+                    <span>{row.Download}</span>
+                  </td>
+                  <td>
+                    <span>{row.Upload}</span>
+                  </td>
+                  <td>
+                    <span>{row.Dependencia_Adm}</span>
+                  </td>
+                  <td>
+                    <span>{row.Localizacao}</span>
+                  </td>
+                  <td>
+                    <span>{row.Tipo_Tecnologia}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   )
