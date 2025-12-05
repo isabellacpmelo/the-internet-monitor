@@ -235,14 +235,16 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
       <div className='mb-8'>
         <h5 className='text-center text-lg font-bold mb-4 text-gray-800'>
           <i className='bi bi-pc-display mr-2' />
-          Médias de Velocidade
+          Médias de Velocidade por Tecnologia
         </h5>
 
         <div className='grid grid-cols-2 lg:grid-cols-4 gap-4'>
           {Object.entries(stats.averagesByTechnology).map(([tech, speeds]) => (
             <div key={tech} className='p-4 rounded-lg border'>
-              <h5 className='font-semibold text-gray-800 mb-3'>{tech}</h5>
-              <div className='space-y-2'>
+              <h5 className='font-semibold text-gray-800 mb-3 text-center'>
+                {tech}
+              </h5>
+              <div className='space-y-2 text-center'>
                 <div>
                   <p className='text-xs text-gray-500'>Download</p>
                   <p className='text-lg font-bold text-blue-600'>
@@ -365,11 +367,11 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
           <i className='bi bi-geo mr-2' />
           Médias de Velocidade por Localização
         </h5>
-        <div className='grid grid-cols-2 gap-6 text-center'>
+        <div className='grid grid-cols-2 gap-6'>
           {Object.entries(stats.averagesByLocation).map(
             ([location, speeds]) => (
               <div key={location} className='p-6 border shadow-sm'>
-                <h5 className='font-semibold text-gray-800 mb-4 flex items-center'>
+                <h5 className='font-semibold text-gray-800 mb-4 flex items-center justify-center'>
                   <i
                     className={`bi ${
                       location === 'Urbana' ? 'bi-buildings' : 'bi-tree'
