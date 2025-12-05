@@ -1,10 +1,17 @@
-import { createContext, useContext, useState, type ReactNode } from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from 'react'
 import type {
   DatasetFilters,
   FilterOptions,
   FilterRange,
   InternetData,
 } from '../types/filters'
+import { useUrlFilters } from '../hooks/useUrlFilters'
 
 interface FiltersContextType {
   filters: DatasetFilters
@@ -30,57 +37,94 @@ export function FiltersProvider({ children }: { children: ReactNode }) {
     tipoTecnologia: [],
   })
 
-  const setDownloadRange = (range: FilterRange) => {
-    setFilters((prev) => ({ ...prev, downloadRange: range }))
-  }
+  const [isInitialized, setIsInitialized] = useState(false)
 
-  const setUploadRange = (range: FilterRange) => {
-    setFilters((prev) => ({ ...prev, uploadRange: range }))
-  }
+  const {
+    getFiltersFromUrl,
+    updateDownloadRange: updateUrlDownloadRange,
+    updateUploadRange: updateUrlUploadRange,
+    updateDependenciaAdm: updateUrlDependenciaAdm,
+    updateLocalizacao: updateUrlLocalizacao,
+    updateTipoTecnologia: updateUrlTipoTecnologia,
+    clearUrlFilters,
+  } = useUrlFilters()
 
-  const setDependenciaAdm = (values: string[]) => {
-    setFilters((prev) => ({ ...prev, dependenciaAdm: values }))
-  }
-
-  const setLocalizacao = (values: string[]) => {
-    setFilters((prev) => ({ ...prev, localizacao: values }))
-  }
-
-  const setTipoTecnologia = (values: string[]) => {
-    setFilters((prev) => ({ ...prev, tipoTecnologia: values }))
-  }
-
-  const resetFilters = (data?: InternetData[]) => {
-    if (data && data.length > 0) {
-      const options = getFilterOptions(data)
-      setFilters({
-        downloadRange: options.downloadRange,
-        uploadRange: options.uploadRange,
-        dependenciaAdm: [],
-        localizacao: [],
-        tipoTecnologia: [],
-      })
-    } else {
-      setFilters({
+  useEffect(() => {
+    if (isInitialized) {
+      const defaultFilters = {
         downloadRange: { min: 0, max: Infinity },
         uploadRange: { min: 0, max: Infinity },
         dependenciaAdm: [],
         localizacao: [],
         tipoTecnologia: [],
-      })
+      }
+      const urlFilters = getFiltersFromUrl(defaultFilters)
+      setFilters(urlFilters)
     }
+  }, [getFiltersFromUrl, isInitialized])
+
+  const setDownloadRange = (range: FilterRange) => {
+    setFilters((prev) => ({ ...prev, downloadRange: range }))
+    updateUrlDownloadRange(range)
   }
 
-  const initializeFilters = (data: InternetData[]) => {
-    if (data.length > 0) {
+  const setUploadRange = (range: FilterRange) => {
+    setFilters((prev) => ({ ...prev, uploadRange: range }))
+    updateUrlUploadRange(range)
+  }
+
+  const setDependenciaAdm = (values: string[]) => {
+    setFilters((prev) => ({ ...prev, dependenciaAdm: values }))
+    updateUrlDependenciaAdm(values)
+  }
+
+  const setLocalizacao = (values: string[]) => {
+    setFilters((prev) => ({ ...prev, localizacao: values }))
+    updateUrlLocalizacao(values)
+  }
+
+  const setTipoTecnologia = (values: string[]) => {
+    setFilters((prev) => ({ ...prev, tipoTecnologia: values }))
+    updateUrlTipoTecnologia(values)
+  }
+
+  const resetFilters = (data?: InternetData[]) => {
+    if (data && data.length > 0) {
       const options = getFilterOptions(data)
-      setFilters({
+      const resetFilters = {
         downloadRange: options.downloadRange,
         uploadRange: options.uploadRange,
         dependenciaAdm: [],
         localizacao: [],
         tipoTecnologia: [],
-      })
+      }
+      setFilters(resetFilters)
+    } else {
+      const resetFilters = {
+        downloadRange: { min: 0, max: Infinity },
+        uploadRange: { min: 0, max: Infinity },
+        dependenciaAdm: [],
+        localizacao: [],
+        tipoTecnologia: [],
+      }
+      setFilters(resetFilters)
+    }
+    clearUrlFilters()
+  }
+
+  const initializeFilters = (data: InternetData[]) => {
+    if (data.length > 0) {
+      const options = getFilterOptions(data)
+      const defaultFilters = {
+        downloadRange: options.downloadRange,
+        uploadRange: options.uploadRange,
+        dependenciaAdm: [],
+        localizacao: [],
+        tipoTecnologia: [],
+      }
+      const urlFilters = getFiltersFromUrl(defaultFilters)
+      setFilters(urlFilters)
+      setIsInitialized(true)
     }
   }
 
