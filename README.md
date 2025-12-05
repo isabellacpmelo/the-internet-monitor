@@ -183,6 +183,12 @@ src/
 
 ## Decisões de Design e Arquitetura
 
+O projeto foi estruturado com foco em modularidade, reutilização de código e uma experiência de usuário fluida.
+
+A ideia central foi criar componentes altamente configuráveis, como gráficos customizados e botões, que pudessem ser reutilizados em diferentes partes da aplicação. Isso não só reduz a duplicação de código, mas também
+
+Outro ponto, é a divisão entre as seções exibidas para o usuário que seguiram o fluxo de mostrar os dados de acordo com o tipo de distribuição, começando com gráficos de pizza para uma visão geral, seguido por gráficos de barras para comparações mais detalhadas, e finalizando com o gráfico de dispersão para análises de correlação.
+
 ## Screenshots
 
 ### Desktop
