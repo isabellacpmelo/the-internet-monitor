@@ -1,21 +1,8 @@
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  ScatterChart,
-  Scatter,
-  ReferenceLine,
-} from 'recharts'
 import { useDatasetStats } from '../../hooks/DatasetStats'
 import type { InternetData } from '../../types/filters'
+import { CustomPieChart } from '../CustomPieChart'
+import { CustomBarChart } from '../CustomBarChart'
+import { CustomScatterChart } from '../CustomScatterChart'
 
 interface DatasetChartsProps {
   data: InternetData[]
@@ -50,8 +37,6 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
     })
   )
 
-  const COLORS = ['#623db6ff', '#284449ff']
-
   const speedByAdminData = Object.entries(stats.averagesByAdministration).map(
     ([admin, speeds]) => ({
       dependencia: admin,
@@ -68,8 +53,6 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
     })
   )
 
-  const ADMIN_COLORS = ['#4c6d4cff', '#9c7c65ff', '#1d6136ff']
-
   const technologyDistributionData = Object.entries(stats.technologyCount).map(
     ([tech, count]) => ({
       name: tech,
@@ -78,7 +61,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
     })
   )
 
-  const TECH_COLORS = ['#222e42ff', '#1a4e3dff', '#aa833fff', '#925858ff']
+  const TECH_COLORS = ['#2b3d5eff', '#720880ff', '#4f5e56ff', '#925858ff']
 
   const scatterData = data.map((item, index) => ({
     download: item.Download,
@@ -126,7 +109,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
               style={{ color: TECH_COLORS[index] }}>
               {item.percentage}%
             </p>
-            <p className='text-xs text-gray-500'>do total</p>
+            <p className='text-xs text-gray-700'>do total</p>
           </div>
         ))}
       </div>
@@ -137,106 +120,26 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
       </h2>
 
       <div className='w-full flex flex-col md:flex-row justify-center items-center mb-4 gap-12 xl:gap-40'>
-        <ResponsiveContainer width={300} height={300}>
-          <PieChart>
-            <Pie
-              data={technologyDistributionData}
-              labelLine={false}
-              label
-              fill='#8884d8'
-              dataKey='value'>
-              {technologyDistributionData.map((_, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={TECH_COLORS[index % TECH_COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#f9fafb',
-                border: '1px solid #d1d5db',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              }}
-              formatter={(value, name) => [
-                `${value} registros (${
-                  technologyDistributionData.find(
-                    (item) => item.value === value
-                  )?.percentage
-                }%)`,
-                name === 'value' ? 'Quantidade' : name,
-              ]}
-            />
-            <Legend
-              wrapperStyle={{
-                paddingTop: '16px',
-                fontWeight: '500',
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-        <ResponsiveContainer width={340} height={300}>
-          <BarChart data={speedByTechData}>
-            <CartesianGrid strokeDasharray='3 3' opacity={0.3} />
-            <XAxis
-              dataKey='tecnologia'
-              angle={-45}
-              textAnchor='end'
-              height={50}
-              fontSize={13}
-              fontWeight='500'
-              tick={{ fill: '#374151' }}
-            />
-            <YAxis
-              label={{
-                value: 'Velocidade (Mbps)',
-                angle: -90,
-                position: 'insideLeft',
-                style: {
-                  textAnchor: 'middle',
-                  fill: '#374151',
-                  fontWeight: '500',
-                },
-              }}
-              tick={{ fill: '#374151' }}
-            />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#f9fafb',
-                border: '1px solid #d1d5db',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              }}
-              labelStyle={{ color: '#1f2937', fontWeight: '600' }}
-            />
-            <Legend
-              wrapperStyle={{
-                paddingTop: '16px',
-                fontWeight: '500',
-              }}
-            />
-            <Bar
-              dataKey='download'
-              fill='#431d5cff'
-              name='Download'
-              radius={[4, 4, 0, 0]}
-            />
-            <Bar
-              dataKey='upload'
-              fill='#04595fff'
-              name='Upload'
-              radius={[4, 4, 0, 0]}
-            />
-          </BarChart>
-        </ResponsiveContainer>
+        <CustomPieChart
+          data={technologyDistributionData}
+          colors={TECH_COLORS}
+          width={300}
+          height={300}
+        />
+        <CustomBarChart
+          data={speedByTechData}
+          xAxisKey='tecnologia'
+          xAxisAngle={-45}
+          width={340}
+          height={300}
+        />
       </div>
 
       <div className='mb-8'>
-        <h5 className='text-center text-lg font-bold mb-4 text-gray-800'>
+        <div className='text-center text-lg font-bold mb-4 text-gray-800'>
           <i className='bi bi-calculator mr-2' />
-         Performance por Tecnologia
-        </h5>
+          Performance por Tecnologia
+        </div>
 
         <div className='grid grid-cols-2 lg:grid-cols-4 gap-4'>
           {Object.entries(stats.averagesByTechnology).map(([tech, speeds]) => (
@@ -246,14 +149,14 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
               </h5>
               <div className='space-y-2 text-center'>
                 <div>
-                  <p className='text-xs text-gray-500'>Download</p>
+                  <p className='text-xs text-gray-700'>Download</p>
                   <p className='text-lg font-bold text-blue-600'>
                     {speeds?.download ? formatNumber(speeds.download) : '0.00'}{' '}
                     Mbps
                   </p>
                 </div>
                 <div>
-                  <p className='text-xs text-gray-500'>Upload</p>
+                  <p className='text-xs text-gray-700'>Upload</p>
                   <p className='text-lg font-bold text-green-600'>
                     {speeds?.upload ? formatNumber(speeds.upload) : '0.00'} Mbps
                   </p>
@@ -270,103 +173,26 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
       </h2>
 
       <div className='w-full flex flex-col md:flex-row justify-center items-center mb-4 gap-12 xl:gap-40'>
-        <ResponsiveContainer width={300} height={300}>
-          <PieChart>
-            <Pie
-              data={locationDistributionData}
-              labelLine={false}
-              label
-              fill='#8884d8'
-              dataKey='value'>
-              {locationDistributionData.map((_, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#f9fafb',
-                border: '1px solid #d1d5db',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              }}
-              formatter={(value, name) => [
-                `${value} registros (${
-                  locationDistributionData.find((item) => item.value === value)
-                    ?.percentage
-                }%)`,
-                name === 'value' ? 'Quantidade' : name,
-              ]}
-            />
-            <Legend
-              wrapperStyle={{
-                paddingTop: '16px',
-                fontWeight: '500',
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
+        <CustomPieChart
+          data={locationDistributionData}
+          colors={TECH_COLORS}
+          width={300}
+          height={300}
+        />
 
-        <ResponsiveContainer width={340} height={300}>
-          <BarChart data={speedByLocationData}>
-            <CartesianGrid strokeDasharray='3 3' opacity={0.3} />
-            <XAxis
-              dataKey='regiao'
-              fontSize={13}
-              fontWeight='500'
-              tick={{ fill: '#374151' }}
-            />
-            <YAxis
-              label={{
-                value: 'Velocidade (Mbps)',
-                angle: -90,
-                position: 'insideLeft',
-                style: {
-                  textAnchor: 'middle',
-                  fill: '#374151',
-                  fontWeight: '500',
-                },
-              }}
-              tick={{ fill: '#374151' }}
-            />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#f9fafb',
-                border: '1px solid #d1d5db',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              }}
-              labelStyle={{ color: '#1f2937', fontWeight: '600' }}
-            />
-            <Legend
-              wrapperStyle={{
-                paddingTop: '16px',
-                fontWeight: '500',
-              }}
-            />
-            <Bar
-              dataKey='download'
-              fill='#233b21ff'
-              name='Download'
-              radius={[4, 4, 0, 0]}
-            />
-            <Bar
-              dataKey='upload'
-              fill='#351d49ff'
-              name='Upload'
-              radius={[4, 4, 0, 0]}
-            />
-          </BarChart>
-        </ResponsiveContainer>
+        <CustomBarChart
+          data={speedByLocationData}
+          xAxisKey='regiao'
+          width={340}
+          height={300}
+        />
       </div>
 
       <div>
-        <h5 className='text-lg text-center font-bold mb-4 text-gray-800 mt-8'>
+        <div className='text-lg text-center font-bold mb-4 text-gray-800 mt-8'>
           <i className='bi bi-calculator mr-2' />
-         Performance por Localização
-        </h5>
+          Performance por Localização
+        </div>
         <div className='grid grid-cols-2 gap-6'>
           {Object.entries(stats.averagesByLocation).map(
             ([location, speeds]) => (
@@ -409,105 +235,27 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
       </h2>
 
       <div className='w-full flex flex-col md:flex-row justify-center items-center mb-12 gap-12 xl:gap-40'>
-        <ResponsiveContainer width={300} height={300}>
-          <PieChart>
-            <Pie
-              data={adminDistributionData}
-              labelLine={false}
-              label
-              fill='#8884d8'
-              dataKey='value'>
-              {adminDistributionData.map((_, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={ADMIN_COLORS[index % ADMIN_COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#f9fafb',
-                border: '1px solid #d1d5db',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              }}
-              formatter={(value, name) => [
-                `${value} registros (${
-                  adminDistributionData.find((item) => item.value === value)
-                    ?.percentage
-                }%)`,
-                name === 'value' ? 'Quantidade' : name,
-              ]}
-            />
-            <Legend
-              wrapperStyle={{
-                paddingTop: '20px',
-                fontWeight: '500',
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-        <ResponsiveContainer width={340} height={300}>
-          <BarChart data={speedByAdminData}>
-            <CartesianGrid strokeDasharray='3 3' opacity={0.3} />
-            <XAxis
-              dataKey='dependencia'
-              angle={-45}
-              textAnchor='end'
-              height={80}
-              fontSize={13}
-              fontWeight='500'
-              tick={{ fill: '#374151' }}
-            />
-            <YAxis
-              label={{
-                value: 'Velocidade (Mbps)',
-                angle: -90,
-                position: 'insideLeft',
-                style: {
-                  textAnchor: 'middle',
-                  fill: '#374151',
-                  fontWeight: '500',
-                },
-              }}
-              tick={{ fill: '#374151' }}
-            />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#f9fafb',
-                border: '1px solid #d1d5db',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              }}
-              labelStyle={{ color: '#1f2937', fontWeight: '600' }}
-            />
-            <Legend
-              wrapperStyle={{
-                paddingTop: '0px',
-                fontWeight: '500',
-              }}
-            />
-            <Bar
-              dataKey='download'
-              fill='#2b5679ff'
-              name='Download'
-              radius={[4, 4, 0, 0]}
-            />
-            <Bar
-              dataKey='upload'
-              fill='#51923eff'
-              name='Upload'
-              radius={[4, 4, 0, 0]}
-            />
-          </BarChart>
-        </ResponsiveContainer>
+        <CustomPieChart
+          data={adminDistributionData}
+          colors={TECH_COLORS}
+          width={300}
+          height={300}
+        />
+        <CustomBarChart
+          data={speedByAdminData}
+          xAxisKey='dependencia'
+          xAxisAngle={-45}
+          xAxisHeight={80}
+          width={340}
+          height={300}
+        />
       </div>
 
       <div className='mb-8'>
-        <h5 className='text-center text-lg font-bold mb-4 text-gray-800'>
+        <div className='text-center text-lg font-bold mb-4 text-gray-800'>
           <i className='bi bi-calculator mr-2' />
-         Performance por Dependência Administrativa
-        </h5>
+          Performance por Dependência Administrativa
+        </div>
 
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-4'>
           {Object.entries(stats.averagesByAdministration).map(
@@ -518,7 +266,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
                 </h5>
                 <div className='space-y-2 text-center'>
                   <div>
-                    <p className='text-xs text-gray-500'>Download</p>
+                    <p className='text-xs text-gray-700'>Download</p>
                     <p className='text-lg font-bold text-blue-600'>
                       {speeds?.download
                         ? formatNumber(speeds.download)
@@ -527,7 +275,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
                     </p>
                   </div>
                   <div>
-                    <p className='text-xs text-gray-500'>Upload</p>
+                    <p className='text-xs text-gray-700'>Upload</p>
                     <p className='text-lg font-bold text-green-600'>
                       {speeds?.upload ? formatNumber(speeds.upload) : '0.00'}{' '}
                       Mbps
@@ -545,178 +293,8 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
         Relação Download vs Upload
       </h2>
 
-      <div className='max-w-3xl mx-auto'>
-        <ResponsiveContainer width='100%' height={300} className='text-sm'>
-          <ScatterChart>
-            <CartesianGrid strokeDasharray='3 3' opacity={0.3} />
-            <XAxis
-              dataKey='download'
-              type='number'
-              domain={['dataMin', 'dataMax']}
-              label={{
-                value: 'Download (Mbps)',
-                position: 'insideBottom',
-                offset: -5,
-                style: {
-                  textAnchor: 'middle',
-                  fill: '#374151',
-                  fontWeight: '500',
-                },
-              }}
-              tick={{ fill: '#374151' }}
-            />
-            <YAxis
-              dataKey='upload'
-              type='number'
-              domain={['dataMin', 'dataMax']}
-              label={{
-                value: 'Upload (Mbps)',
-                angle: -90,
-                position: 'insideLeft',
-                style: {
-                  textAnchor: 'middle',
-                  fill: '#374151',
-                  fontWeight: '500',
-                },
-              }}
-              tick={{ fill: '#374151' }}
-            />
-
-            <ReferenceLine
-              segment={(() => {
-                const n = scatterData.length
-                const sumX = scatterData.reduce((sum, d) => sum + d.download, 0)
-                const sumY = scatterData.reduce((sum, d) => sum + d.upload, 0)
-                const sumXY = scatterData.reduce(
-                  (sum, d) => sum + d.download * d.upload,
-                  0
-                )
-                const sumXX = scatterData.reduce(
-                  (sum, d) => sum + d.download * d.download,
-                  0
-                )
-
-                const slope =
-                  (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX)
-                const intercept = (sumY - slope * sumX) / n
-
-                const minX = Math.min(...scatterData.map((d) => d.download))
-                const maxX = Math.max(...scatterData.map((d) => d.download))
-
-                return [
-                  { x: minX, y: Math.max(0, slope * minX + intercept) },
-                  { x: maxX, y: slope * maxX + intercept },
-                ]
-              })()}
-              stroke='#f59e0b'
-              strokeWidth={3}
-            />
-
-            <ReferenceLine
-              x={100}
-              stroke='#9ca3af'
-              strokeDasharray='2 2'
-              strokeWidth={1}
-              opacity={0.5}
-            />
-            <ReferenceLine
-              x={300}
-              stroke='#9ca3af'
-              strokeDasharray='2 2'
-              strokeWidth={1}
-              opacity={0.5}
-            />
-            <ReferenceLine
-              x={500}
-              stroke='#9ca3af'
-              strokeDasharray='2 2'
-              strokeWidth={1}
-              opacity={0.5}
-            />
-            <ReferenceLine
-              y={25}
-              stroke='#9ca3af'
-              strokeDasharray='2 2'
-              strokeWidth={1}
-              opacity={0.5}
-            />
-            <ReferenceLine
-              y={50}
-              stroke='#9ca3af'
-              strokeDasharray='2 2'
-              strokeWidth={1}
-              opacity={0.5}
-            />
-            <ReferenceLine
-              y={100}
-              stroke='#9ca3af'
-              strokeDasharray='2 2'
-              strokeWidth={1}
-              opacity={0.5}
-            />
-            <Tooltip
-              cursor={{ strokeDasharray: '3 3' }}
-              contentStyle={{
-                backgroundColor: '#f9fafb',
-                border: '1px solid #d1d5db',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              }}
-              content={({ active, payload }) => {
-                if (active && payload && payload.length) {
-                  const data = payload[0].payload
-                  const ratio = ((data.upload / data.download) * 100).toFixed(1)
-                  const efficiency =
-                    data.download > 100
-                      ? data.upload > 50
-                        ? 'Excelente'
-                        : data.upload > 25
-                        ? 'Boa'
-                        : 'Limitada'
-                      : 'Baixa'
-                  return (
-                    <div className='bg-white p-3 border rounded shadow-lg'>
-                      <p className='font-semibold text-gray-800 mb-2'>
-                        Velocidades
-                      </p>
-                      <p className='text-blue-600'>
-                        <i className='bi bi-download' /> Download:{' '}
-                        {data.download} Mbps
-                      </p>
-                      <p className='text-green-600'>
-                        <i className='bi bi-upload' /> Upload: {data.upload}{' '}
-                        Mbps
-                      </p>
-                      <p className='text-orange-600'>
-                        <i className='bi bi-calculator' /> Proporção: {ratio}%
-                      </p>
-                      <p className='text-gray-600'>
-                        <i className='bi bi-lightning-charge' /> Qualidade:{' '}
-                        {efficiency}
-                      </p>
-                    </div>
-                  )
-                }
-                return null
-              }}
-            />
-            <Legend
-              wrapperStyle={{
-                paddingTop: '16px',
-                fontWeight: '500',
-              }}
-            />
-            <Scatter
-              data={scatterData}
-              fill='#6366f1'
-              name='Conexões'
-              r={5}
-              fillOpacity={0.7}
-              stroke='#4f46e5'
-              strokeWidth={1}
-            />
-          </ScatterChart>
-        </ResponsiveContainer>
+      <div className='max-w-3xl mx-auto bg-white/50 p-6 rounded-lg'>
+        <CustomScatterChart data={scatterData} width='100%' height={300} />
       </div>
 
       <div className='flex flex-col justify-between w-full'>
@@ -740,20 +318,20 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
           <div>
             <ul className='space-y-1'>
               <li>
-                • <span className='font-bold text-green-900'>Excelente:</span>{' '}
-                Download &gt;100 Mbps e Upload &gt;50 Mbps
+                • <span className='font-bold text-green-600'>Excelente:</span>{' '}
+                Download &gt;300 Mbps e Upload &gt;50 Mbps
               </li>
               <li>
-                • <span className='font-bold text-yellow-500'>Boa:</span>{' '}
-                Download &gt;100 Mbps e Upload &gt;50 Mbps
+                • <span className='font-bold text-blue-600'>Boa:</span> Download
+                &gt;100 Mbps e Upload &gt;25 Mbps
               </li>
               <li>
-                • <span className='font-bold text-amber-600'>Limitada:</span>
-                Download &gt;100 Mbps mas Upload &lt;25 Mbps
+                • <span className='font-bold text-yellow-600'>Regular:</span>{' '}
+                Download &gt;50 Mbps e Upload &gt;10 Mbps
               </li>
               <li>
-                • <span className='font-bold text-red-500'>Baixa:</span>{' '}
-                Download &lt;100 Mbps
+                • <span className='font-bold text-red-500'>Baixa:</span> Demais
+                conexões
               </li>
             </ul>
           </div>

@@ -20,7 +20,20 @@ function MainTemplate() {
   }
 
   if (loading) {
-    return <div>Carregando dados...</div>
+    return (
+      <div className='h-screen flex flex-col justify-center items-center gap-4'>
+        <div className='loadingio-spinner-radio-nq4q5u6dq7r'>
+          <div className='ldio-x2uulkbinbj'>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <div className='font-bold text-gray-900 text-xl animate-pulse'>
+          Carregando...
+        </div>
+      </div>
+    )
   }
 
   if (error) {
@@ -28,7 +41,7 @@ function MainTemplate() {
   }
 
   return (
-    <div className='xl:p-16 p-4 my-10 max-w-7xl mx-auto'>
+    <main className='xl:p-16 p-4 my-10 max-w-7xl mx-auto'>
       <div className='text-center mb-8'>
         <h1 className='text-5xl font-bold text-gray-800 mb-2'>
           <i className='bi bi-router mr-3' />
@@ -76,7 +89,7 @@ function MainTemplate() {
         data={data}
         onReset={handleResetFilters}
       />
-    </div>
+    </main>
   )
 }
 
