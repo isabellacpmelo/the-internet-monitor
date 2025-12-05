@@ -235,7 +235,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
       <div className='mb-8'>
         <h5 className='text-center text-lg font-bold mb-4 text-gray-800'>
           <i className='bi bi-calculator mr-2' />
-          Médias de Velocidade por Tecnologia
+         Performance por Tecnologia
         </h5>
 
         <div className='grid grid-cols-2 lg:grid-cols-4 gap-4'>
@@ -365,7 +365,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
       <div>
         <h5 className='text-lg text-center font-bold mb-4 text-gray-800 mt-8'>
           <i className='bi bi-calculator mr-2' />
-          Médias de Velocidade por Localização
+         Performance por Localização
         </h5>
         <div className='grid grid-cols-2 gap-6'>
           {Object.entries(stats.averagesByLocation).map(
@@ -506,7 +506,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
       <div className='mb-8'>
         <h5 className='text-center text-lg font-bold mb-4 text-gray-800'>
           <i className='bi bi-calculator mr-2' />
-          Médias de Velocidade por Dependência Administrativa
+         Performance por Dependência Administrativa
         </h5>
 
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-4'>
