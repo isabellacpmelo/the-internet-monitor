@@ -27,7 +27,7 @@ function MainTemplate() {
   }
 
   return (
-    <div className='p-16 mb-8'>
+    <div className='xl:p-16 p-4 mb-8'>
       <div className='text-center mb-8'>
         <h1 className='text-5xl font-bold text-gray-800 mb-2'>
           <i className='bi bi-router mr-3' />
@@ -38,15 +38,13 @@ function MainTemplate() {
         </p>
       </div>
 
-      <div className='flex justify-between items-center my-8 p-6 bg-gray-50 rounded-lg border'>
+      <div className='flex justify-between items-center my-8 xl:p-4 p-2 bg-gray-100 rounded-lg border xl:mx-32'>
         <div className='flex items-center gap-3'>
           <i className='bi bi-funnel-fill text-2xl text-gray-600' />
           <div>
-            <h3 className='text-lg font-semibold text-gray-800'>
-              Filtros de Dados
-            </h3>
+            <h3 className='text-lg font-semibold text-gray-800'>Filtros</h3>
             <p className='text-sm text-gray-600'>
-              {filteredData.length} de {data.length} registros exibidos
+              {filteredData.length} de {data.length} registros sendo exibidos
             </p>
           </div>
         </div>
