@@ -82,10 +82,11 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
 
   return (
     <div>
-      <div className='w-full flex justify-between items-center my-4'>
-        <h3>
-          Tabela com os dados do dataset ({sortedDataset.length} registros)
-        </h3>
+      <h2 className='text-2xl font-bold my-8 text-center text-gray-800'>
+        <i className='bi bi-clipboard-data mr-3' />
+        Dataset ({sortedDataset.length} registros)
+      </h2>
+      <div className='w-full flex justify-end items-center my-4'>
         <div className='flex gap-3'>
           <button
             type='button'
