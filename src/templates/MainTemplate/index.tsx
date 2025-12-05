@@ -71,7 +71,7 @@ function MainTemplate() {
       </div>
 
       <DatasetCharts data={filteredData} />
-      <DatasetSummary data={data} filteredData={filteredData} />
+      <DatasetSummary data={filteredData} />
       <DatasetTable dataset={filteredData} />
       <FilterDrawer
         isOpen={isDrawerOpen}
