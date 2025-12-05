@@ -87,7 +87,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
 
   return (
     <div className=''>
-      <h2 className='text-2xl font-bold mb-6 text-center text-gray-800'>
+      <h2 className='text-2xl font-bold mb-8 text-center text-gray-800'>
         <i className='bi bi-bar-chart-fill mr-3' />
         Velocidades de Internet por Tipo de Tecnologia
       </h2>
@@ -134,8 +134,8 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
         ))}
       </div>
 
-      <div className='w-full flex flex-col md:flex-row justify-center items-center mb-10 gap-12 xl:gap-20'>
-        <ResponsiveContainer width={300} height={320}>
+      <div className='w-full flex flex-col md:flex-row justify-center items-center mb-12 gap-12 xl:gap-40'>
+        <ResponsiveContainer width={300} height={300}>
           <PieChart>
             <Pie
               data={technologyDistributionData}
@@ -230,12 +230,12 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
         </ResponsiveContainer>
       </div>
 
-      <h2 className='text-2xl font-bold mb-6 text-center text-gray-800'>
+      <h2 className='text-2xl font-bold mb-8 text-center text-gray-800'>
         <i className='bi bi-geo-alt-fill mr-3' />
         Comparativo de Velocidades por Região
       </h2>
 
-      <div className='w-full flex flex-col md:flex-row justify-center items-center mb-10 gap-12 xl:gap-20'>
+      <div className='w-full flex flex-col md:flex-row justify-center items-center mb-12 gap-12 xl:gap-40'>
         <ResponsiveContainer width={300} height={300}>
           <PieChart>
             <Pie
@@ -328,12 +328,12 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
         </ResponsiveContainer>
       </div>
 
-      <h2 className='text-2xl font-bold mb-6 text-center text-gray-800'>
+      <h2 className='text-2xl font-bold mb-8 text-center text-gray-800'>
         <i className='bi bi-building mr-3' />
         Velocidades por Dependência Administrativa
       </h2>
 
-      <div className='w-full flex flex-col md:flex-row justify-center items-center mb-10 gap-12 xl:gap-20'>
+      <div className='w-full flex flex-col md:flex-row justify-center items-center mb-12 gap-12 xl:gap-40'>
         <ResponsiveContainer width={300} height={300}>
           <PieChart>
             <Pie
@@ -428,7 +428,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
         </ResponsiveContainer>
       </div>
 
-      <h2 className='text-2xl font-bold mb-6 text-center text-gray-800'>
+      <h2 className='text-2xl font-bold mb-8 text-center text-gray-800'>
         <i className='bi bi-scatter-chart mr-3' />
         Relação Download vs Upload
       </h2>
