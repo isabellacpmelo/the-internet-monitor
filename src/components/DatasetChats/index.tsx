@@ -24,6 +24,8 @@ interface DatasetChartsProps {
 export function DatasetCharts({ data }: DatasetChartsProps) {
   const stats = useDatasetStats(data)
 
+  const formatNumber = (num: number) => num.toFixed(2)
+
   const speedByTechData = Object.entries(stats.averagesByTechnology).map(
     ([tech, speeds]) => ({
       tecnologia: tech,
@@ -87,11 +89,6 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
 
   return (
     <div className=''>
-      <h2 className='text-2xl font-bold mb-8 text-center text-gray-800'>
-        <i className='bi bi-pc-display mr-3' />
-        Velocidades de Internet por Tipo de Tecnologia
-      </h2>
-
       <div className='mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 mb-10'>
         {technologyDistributionData.map((item, index) => (
           <div
@@ -134,7 +131,12 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
         ))}
       </div>
 
-      <div className='w-full flex flex-col md:flex-row justify-center items-center mb-12 gap-12 xl:gap-40'>
+      <h2 className='text-2xl font-bold mb-8 text-center text-gray-800'>
+        <i className='bi bi-pc-display mr-3' />
+        Velocidades de Internet por Tipo de Tecnologia
+      </h2>
+
+      <div className='w-full flex flex-col md:flex-row justify-center items-center mb-4 gap-12 xl:gap-40'>
         <ResponsiveContainer width={300} height={300}>
           <PieChart>
             <Pie
@@ -230,12 +232,42 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
         </ResponsiveContainer>
       </div>
 
+      <div className='mb-8'>
+        <h5 className='text-center text-lg font-bold mb-4 text-gray-800'>
+          <i className='bi bi-pc-display mr-2' />
+          Médias de Velocidade
+        </h5>
+
+        <div className='grid grid-cols-2 lg:grid-cols-4 gap-4'>
+          {Object.entries(stats.averagesByTechnology).map(([tech, speeds]) => (
+            <div key={tech} className='p-4 rounded-lg border'>
+              <h5 className='font-semibold text-gray-800 mb-3'>{tech}</h5>
+              <div className='space-y-2'>
+                <div>
+                  <p className='text-xs text-gray-500'>Download</p>
+                  <p className='text-lg font-bold text-blue-600'>
+                    {speeds?.download ? formatNumber(speeds.download) : '0.00'}{' '}
+                    Mbps
+                  </p>
+                </div>
+                <div>
+                  <p className='text-xs text-gray-500'>Upload</p>
+                  <p className='text-lg font-bold text-green-600'>
+                    {speeds?.upload ? formatNumber(speeds.upload) : '0.00'} Mbps
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <h2 className='text-2xl font-bold mb-8 text-center text-gray-800'>
         <i className='bi bi-geo mr-3' />
         Comparativo de Velocidades por Região
       </h2>
 
-      <div className='w-full flex flex-col md:flex-row justify-center items-center mb-12 gap-12 xl:gap-40'>
+      <div className='w-full flex flex-col md:flex-row justify-center items-center mb-4 gap-12 xl:gap-40'>
         <ResponsiveContainer width={300} height={300}>
           <PieChart>
             <Pie
@@ -328,7 +360,48 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
         </ResponsiveContainer>
       </div>
 
-      <h2 className='text-2xl font-bold mb-8 text-center text-gray-800'>
+      <div>
+        <h5 className='text-lg text-center font-bold mb-4 text-gray-800 mt-8'>
+          <i className='bi bi-geo mr-2' />
+          Médias de Velocidade por Localização
+        </h5>
+        <div className='grid grid-cols-2 gap-6 text-center'>
+          {Object.entries(stats.averagesByLocation).map(
+            ([location, speeds]) => (
+              <div key={location} className='p-6 border shadow-sm'>
+                <h5 className='font-semibold text-gray-800 mb-4 flex items-center'>
+                  <i
+                    className={`bi ${
+                      location === 'Urbana' ? 'bi-buildings' : 'bi-tree'
+                    } mr-2`}
+                  />
+                  {location}
+                </h5>
+                <div className='grid grid-cols-2 gap-4'>
+                  <div className='text-center'>
+                    <p className='text-sm text-gray-500 mb-1'>Download</p>
+                    <p className='text-2xl font-bold text-blue-600'>
+                      {speeds?.download
+                        ? formatNumber(speeds.download)
+                        : '0.00'}
+                    </p>
+                    <p className='text-xs text-gray-400'>Mbps</p>
+                  </div>
+                  <div className='text-center'>
+                    <p className='text-sm text-gray-500 mb-1'>Upload</p>
+                    <p className='text-2xl font-bold text-green-600'>
+                      {speeds?.upload ? formatNumber(speeds.upload) : '0.00'}
+                    </p>
+                    <p className='text-xs text-gray-400'>Mbps</p>
+                  </div>
+                </div>
+              </div>
+            )
+          )}
+        </div>
+      </div>
+
+      <h2 className='text-2xl font-bold mb-8 text-center text-gray-800 mt-8'>
         <i className='bi bi-buildings mr-3' />
         Velocidades por Dependência Administrativa
       </h2>
@@ -429,7 +502,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
       </div>
 
       <h2 className='text-2xl font-bold mb-8 text-center text-gray-800'>
-        <i className='bi bi-scatter-chart mr-3' />
+        <i className='bi bi-graph-up mr-3' />
         Relação Download vs Upload
       </h2>
 

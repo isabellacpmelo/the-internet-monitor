@@ -71,6 +71,7 @@ function MainTemplate() {
       <DatasetCharts data={filteredData} />
       <DatasetSummary data={filteredData} />
       <DatasetTable dataset={filteredData} />
+
       <FilterDrawer
         isOpen={isDrawerOpen}
         onClose={closeDrawer}
