@@ -50,8 +50,6 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
     })
   )
 
-  const COLORS = ['#623db6ff', '#284449ff']
-
   const speedByAdminData = Object.entries(stats.averagesByAdministration).map(
     ([admin, speeds]) => ({
       dependencia: admin,
@@ -68,8 +66,6 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
     })
   )
 
-  const ADMIN_COLORS = ['#4c6d4cff', '#9c7c65ff', '#1d6136ff']
-
   const technologyDistributionData = Object.entries(stats.technologyCount).map(
     ([tech, count]) => ({
       name: tech,
@@ -78,7 +74,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
     })
   )
 
-  const TECH_COLORS = ['#222e42ff', '#1a4e3dff', '#aa833fff', '#925858ff']
+  const TECH_COLORS = ['#2b3d5eff', '#720880ff', '#4f5e56ff', '#925858ff']
 
   const scatterData = data.map((item, index) => ({
     download: item.Download,
@@ -218,13 +214,13 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
             />
             <Bar
               dataKey='download'
-              fill='#431d5cff'
+              fill='#1a5a8fff'
               name='Download'
               radius={[4, 4, 0, 0]}
             />
             <Bar
               dataKey='upload'
-              fill='#04595fff'
+              fill='#6d346fff'
               name='Upload'
               radius={[4, 4, 0, 0]}
             />
@@ -281,7 +277,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
               {locationDistributionData.map((_, index) => (
                 <Cell
                   key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
+                  fill={TECH_COLORS[index % TECH_COLORS.length]}
                 />
               ))}
             </Pie>
@@ -348,13 +344,13 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
             />
             <Bar
               dataKey='download'
-              fill='#233b21ff'
+              fill='#1a5a8fff'
               name='Download'
               radius={[4, 4, 0, 0]}
             />
             <Bar
               dataKey='upload'
-              fill='#351d49ff'
+              fill='#6d346fff'
               name='Upload'
               radius={[4, 4, 0, 0]}
             />
@@ -420,7 +416,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
               {adminDistributionData.map((_, index) => (
                 <Cell
                   key={`cell-${index}`}
-                  fill={ADMIN_COLORS[index % ADMIN_COLORS.length]}
+                  fill={TECH_COLORS[index % TECH_COLORS.length]}
                 />
               ))}
             </Pie>
@@ -489,13 +485,13 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
             />
             <Bar
               dataKey='download'
-              fill='#2b5679ff'
+              fill='#1a5a8fff'
               name='Download'
               radius={[4, 4, 0, 0]}
             />
             <Bar
               dataKey='upload'
-              fill='#51923eff'
+              fill='#6d346fff'
               name='Upload'
               radius={[4, 4, 0, 0]}
             />
@@ -545,7 +541,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
         Relação Download vs Upload
       </h2>
 
-      <div className='max-w-3xl mx-auto'>
+      <div className='max-w-3xl mx-auto bg-white/50 p-6 rounded-lg'>
         <ResponsiveContainer width='100%' height={300} className='text-sm'>
           <ScatterChart>
             <CartesianGrid strokeDasharray='3 3' opacity={0.3} />
@@ -635,14 +631,14 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
             />
             <ReferenceLine
               y={25}
-              stroke='#9ca3af'
+              stroke='#af9caaff'
               strokeDasharray='2 2'
               strokeWidth={1}
               opacity={0.5}
             />
             <ReferenceLine
               y={50}
-              stroke='#9ca3af'
+              stroke='#af9caeff'
               strokeDasharray='2 2'
               strokeWidth={1}
               opacity={0.5}
@@ -658,7 +654,7 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
               cursor={{ strokeDasharray: '3 3' }}
               contentStyle={{
                 backgroundColor: '#f9fafb',
-                border: '1px solid #d1d5db',
+                border: '1px solid #9ea6b1ff',
                 borderRadius: '8px',
                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
               }}
@@ -708,11 +704,11 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
             />
             <Scatter
               data={scatterData}
-              fill='#6366f1'
+              fill='#252683ff'
               name='Conexões'
               r={5}
               fillOpacity={0.7}
-              stroke='#4f46e5'
+              stroke='#6d69b5ff'
               strokeWidth={1}
             />
           </ScatterChart>
