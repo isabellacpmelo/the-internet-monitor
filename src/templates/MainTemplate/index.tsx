@@ -55,7 +55,7 @@ function MainTemplate() {
             icon={<i className='bi bi-arrow-counterclockwise' />}
             onClick={handleResetFilters}
             title='Resetar todos os filtros'>
-            Resetar Filtros
+            Limpar
           </AppButton>
           <AppButton
             icon={<i className='bi bi-sliders' />}
