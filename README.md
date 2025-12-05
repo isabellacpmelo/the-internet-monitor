@@ -40,18 +40,15 @@ Exemplo de dados do dataset:
 ### **UI**
 
 - **Tailwind CSS 4** - Framework de CSS utilitário
-- **Bootstrap Icons** - Biblioteca de ícones profissionais
-<!-- - **CSS Modules** - Estilização modular e encapsulada -->
+- **Bootstrap Icons** - Biblioteca de ícones
 
 ### **Visualização de Dados**
 
 - **Recharts** - Biblioteca de gráficos responsivos e interativos
-<!-- - **Componentes Customizados** - Gráficos reutilizáveis (Pie, Bar, Scatter) -->
 
 ### **Processamento de Dados**
 
 - **PapaParse** - Parser robusto para arquivos CSV
-<!-- - **Custom Hooks** - Lógica de dados reutilizável e otimizada -->
 
 ## 📦 Instalação e Execução
 
@@ -133,9 +130,11 @@ src/
 
 #### **Design System Consistente**
 
-- **Paleta de Cores**: Tons profissionais de azul, cinza e accent colors
+- **Paleta de Cores**: Tons vibrantes para destaque, permitindo fácil identificação do tipo de informação que está sendo exibida
 - **Tipografia**: Hierarquia clara com pesos e tamanhos consistentes
-- **Espaçamento**: Sistema baseado em múltiplos de 4px (Tailwind)
+- **Dimensionamento**: Sistema baseado em múltiplos de 4px (Tailwind)
+- **CSS Modules**: Estilização modular e encapsulada
+- **Componetes**: Criação de componentes reutilizáveis e configuráveis para garantir um código limpo e de fácil manutenção.
 
 #### **Visualizações Inteligentes**
 
@@ -146,10 +145,10 @@ src/
 
 #### **Arquitetura Modular**
 
-- **Componentes Reutilizáveis**: Gráficos configuráveis via props
-- **Custom Hooks**: Lógica de negócio separada da apresentação
-- **Context API**: Estado global eficiente para filtros
-- **TypeScript**: Tipagem forte em todos os componentes
+- **Componentes Reutilizáveis**: Componentes isolados e configuráveis, facilitando manutenção de código, incluindo gráficos customizados, botões e tabela.
+- **Custom Hooks**: Lógica de dados reutilizável e otimizada, encapsulando funcionalidades específicas
+- **Context API**: Estado global eficiente para filtros, de forma que qualquer componente pode acessar e modificar os filtros aplicados
+- **TypeScript**: Tipagem forte em todos os componentes, permitindo maior segurança e autocompletar durante o desenvolvimento
 
 ## Funcionalidades Detalhadas
 
@@ -164,6 +163,7 @@ src/
 
 - **Paginação Inteligente**: 50 registros por página com navegação completa
 - **Ordenação por Colunas**: Os cabeçalhos possuem botões para ordenar asc/desc
+- **Reset de Ordenação**: Botão para resetar a ordenação para o estado inicial
 - **Design Responsivo**: Adaptável para diferentes tamanhos de tela
 - **Exportação CSV**: Download dos dados filtrados com timestamp
 
@@ -171,13 +171,13 @@ src/
 
 - **Gráficos Interativos**: Tooltips informativos
 - **Análises de dados**: Médias, percentuais e correlações
-- **Regressão Linear**: Tendência automática no gráfico de dispersão
-- **Classificação de Qualidade**: O scatter plot possue tooltips que indicam a qualidade da internet para aquele ponto do gráfico
+- **Regressão Linear**: Gráfico de dispersão (scatter plot) com linha de tendência para download vs upload
+- **Classificação de Qualidade**: Tooltips no gráfico que indicam a qualidade da internet para aquele ponto do gráfico
 
 ### **4. Experiência do Usuário**
 
-- **Loading States**: Indicadores visuais durante carregamento
-- **Micro-interações**: Hover effects e transições suaves
+- **Loading States**: Tela de carregamento para que o usuário saiba que os dados estão sendo processados
+- **Micro-interações**: Hover effects e transições suaves com animações sutis
 - **Responsividade**: Layout adaptável para mobile e desktop
 - **Acessibilidade**: Cuidado com contraste e navegação por teclado, além de labels descritivos em itens interativos ou que não possuem textos
 
@@ -187,8 +187,13 @@ src/
 
 ### Desktop
 
+<div align="center">
 <img height="1500em" alt="Desktop Print Screen" src="https://i.imgur.com/uA2h6xc.png" />
+</div>
 
 ### Mobile
 
+<div align="center">
 <img height="2000em" alt="Mobile Print Screen" src="https://i.imgur.com/dVwBUuA.png" />
+
+</div>
