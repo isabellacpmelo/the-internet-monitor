@@ -180,6 +180,7 @@ src/
 - **Micro-interações**: Hover effects e transições suaves com animações sutis
 - **Responsividade**: Layout adaptável para mobile e desktop
 - **Acessibilidade**: Cuidado com contraste e navegação por teclado, além de labels descritivos em itens interativos ou que não possuem textos
+- **Meta Tags**: Otimização para SEO com meta tags relevantes.
 
 ## Decisões de Design e Arquitetura
 
