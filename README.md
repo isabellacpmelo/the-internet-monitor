@@ -8,7 +8,7 @@ Esse repositório consiste em uma aplicação web moderna para análise abrangen
 <a href="https://internet-monitor.netlify.app/"><img height="355em" alt="The internet monitor" src="https://i.imgur.com/hSXyftf.gif" /></a>
 </br>
 </br>
-<a href="https://internet-monitor.netlify.app/">Click here to access the website</a>
+<a href="https://internet-monitor.netlify.app/">Clique aqui para acessar o site</a>
 </div>
 
 ## Visão Geral
@@ -102,28 +102,34 @@ npm run lint     # Verificação de código com ESLint
 
 ```
 src/
-├── components/           # Componentes React reutilizáveis
-│   ├── AppButton/       # Botão customizado com variantes
-│   ├── DatasetCharts/   # Dashboard principal de gráficos
-│   ├── DatasetSummary/  # Resumo estatístico dos dados
-│   ├── DatasetTable/    # Tabela paginada com ordenação
-│   ├── FilterDrawer/    # Drawer lateral de filtros
-│   ├── Filters/         # Sistema de filtros avançado
-│   ├── CustomPieChart/  # Componente reutilizável de pizza
-│   ├── CustomBarChart/ # Componente reutilizável de barras
-│   ├── CustomScatterChart/ # Componente reutilizável de dispersão
-│   └── TableHeadButton/ # Botão de ordenação de colunas
-├── contexts/            # Contextos React para estado global
-│   └── FiltersContext.tsx # Gerenciamento de estado dos filtros
-├── hooks/              # Custom hooks reutilizáveis
-│   ├── DatasetStats.ts     # Hook para estatísticas dos dados
-│   ├── useDatasetCsv.ts   # Hook para carregamento de CSV
-│   └── useFilterDrawer.ts # Hook para controle do drawer
-├── templates/          # Templates de layout
-│   └── MainTemplate/   # Layout principal da aplicação
-├── types/             # Definições TypeScript
-│   └── filters.ts     # Tipos para filtros e dados
-└── public/assets/csv/ # Dataset CSV principal
+├── App.tsx                  # Componente principal da aplicação
+├── index.css                # Estilos globais
+├── main.tsx                 # Ponto de entrada do React
+├── components/              # Componentes React reutilizáveis
+│   ├── AppButton/           # Botão customizado com variantes
+│   ├── CustomBarChart/      # Gráfico de barras reutilizável
+│   ├── CustomPieChart/      # Gráfico de pizza reutilizável
+│   ├── CustomScatterChart/  # Gráfico de dispersão reutilizável
+│   ├── DatasetChats/        # Dashboard principal de gráficos
+│   ├── DatasetSummary/      # Resumo estatístico dos dados
+│   ├── DatasetTable/        # Tabela paginada com ordenação
+│   ├── FilterDrawer/        # Drawer lateral de filtros
+│   ├── Filters/             # Sistema de filtros
+│   └── TableHeadButton/     # Botão de ordenação de colunas
+├── contexts/                # Contextos React para estado global
+│   └── FiltersContext.tsx   # Gerenciamento de estado dos filtros
+├── hooks/                   # Custom hooks
+│   ├── DatasetStats.ts      # Hook para estatísticas dos dados
+│   ├── useDatasetCsv.ts     # Hook para carregamento de CSV
+│   ├── useFilterDrawer.ts   # Hook para controle do drawer
+│   └── useUrlFilters.ts     # Hook para persistência dos filtros na URL
+├── templates/               # Templates de layout
+│   └── MainTemplate/        # Layout principal da aplicação
+│       └── index.tsx
+├── types/                   # Definições para tipagem do TypeScript
+│   └── filters.ts           # Tipos para filtros e dados
+└── public/assets/csv/       # Dataset CSV principal
+    └── internet-dataset.csv
 ```
 
 ### **Padrões de Design Implementados**
@@ -158,6 +164,10 @@ src/
 - **Interface Drawer**: Painel lateral elegante e intuitivo
 - **Aplicação Dinâmica**: Filtragem em tempo real dos dados
 - **Estado Persistente**: Mantém filtros durante navegação
+- **Persistência dos Filtros na URL**: Os filtros aplicados são refletidos diretamente na URL, permitindo que o usuário compartilhe links com filtros pré-definidos e retome o estado da análise ao acessar novamente o mesmo link. Isso facilita o compartilhamento de análises específicas e melhora a navegação (voltar/avançar) mantendo o contexto dos filtros.
+
+**Exemplo de uso:**
+Ao aplicar filtros, a URL é atualizada automaticamente. Se você copiar e compartilhar o link, qualquer pessoa que acessar verá os mesmos filtros aplicados.
 
 ### **2. Tabela**
 
@@ -202,6 +212,15 @@ O **Internet Monitor** está hospedado no [Netlify](https://www.netlify.com/), p
 - **HTTPS**: Automaticamente provisionado com certificado SSL gratuito disponibilizado pelo Netlify
 
 O Netlify foi escolhido pela sua facilidade de integração, performance excepcional e recursos robustos para aplicações React/Vite.
+
+## Organização do desenvolvimento
+
+- **Github Issues**: Foram utilizadas as issues do GitHub para rastreamento de tarefas e organização de cada etapa de desenvolvimento
+- **GitHub Milestones**: Essa funcionalidade foi utilizada para agrupar as issues criadas e acompanhar o progresso do projeto em fases.
+- **Controle de Versão**: Git com GitHub para versionamento e colaboração
+- **Pull Requests**: Cada nova funcionalidade ou correção foi implementada em branches separadas, com revisão de código antes do merge
+- **Commits Descritivos**: Mensagens claras e padronizadas para facilitar o entendimento do histórico de mudanças
+- **Branches**: Branchs organizadas por funcionalidades e de acordo com as issues criadas.
 
 ## Screenshots
 
