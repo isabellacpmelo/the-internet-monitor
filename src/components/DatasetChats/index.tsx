@@ -7,15 +7,13 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
   ScatterChart,
   Scatter,
   ReferenceLine,
 } from 'recharts'
 import { useDatasetStats } from '../../hooks/DatasetStats'
 import type { InternetData } from '../../types/filters'
+import { CustomPieChart } from '../CustomPieChart'
 
 interface DatasetChartsProps {
   data: InternetData[]
@@ -133,50 +131,12 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
       </h2>
 
       <div className='w-full flex flex-col md:flex-row justify-center items-center mb-4 gap-12 xl:gap-40'>
-        <ResponsiveContainer width={300} height={300}>
-          <PieChart>
-            <Pie
-              data={technologyDistributionData}
-              labelLine={false}
-              label={{
-                position: 'inside',
-                fontSize: 12,
-                fontWeight: 'bold',
-                fill: 'white',
-              }}
-              fill='#8884d8'
-              dataKey='value'>
-              {technologyDistributionData.map((_, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={TECH_COLORS[index % TECH_COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#f9fafb',
-                border: '1px solid #d1d5db',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              }}
-              formatter={(value, name) => [
-                `${value} registros (${
-                  technologyDistributionData.find(
-                    (item) => item.value === value
-                  )?.percentage
-                }%)`,
-                name === 'value' ? 'Quantidade' : name,
-              ]}
-            />
-            <Legend
-              wrapperStyle={{
-                paddingTop: '16px',
-                fontWeight: '500',
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
+        <CustomPieChart
+          data={technologyDistributionData}
+          colors={TECH_COLORS}
+          width={300}
+          height={300}
+        />
         <ResponsiveContainer width={340} height={300}>
           <BarChart data={speedByTechData}>
             <CartesianGrid strokeDasharray='3 3' opacity={0.3} />
@@ -271,49 +231,12 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
       </h2>
 
       <div className='w-full flex flex-col md:flex-row justify-center items-center mb-4 gap-12 xl:gap-40'>
-        <ResponsiveContainer width={300} height={300}>
-          <PieChart>
-            <Pie
-              data={locationDistributionData}
-              labelLine={false}
-              label={{
-                position: 'inside',
-                fontSize: 12,
-                fontWeight: 'bold',
-                fill: 'white',
-              }}
-              fill='#8884d8'
-              dataKey='value'>
-              {locationDistributionData.map((_, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={TECH_COLORS[index % TECH_COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#f9fafb',
-                border: '1px solid #d1d5db',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              }}
-              formatter={(value, name) => [
-                `${value} registros (${
-                  locationDistributionData.find((item) => item.value === value)
-                    ?.percentage
-                }%)`,
-                name === 'value' ? 'Quantidade' : name,
-              ]}
-            />
-            <Legend
-              wrapperStyle={{
-                paddingTop: '16px',
-                fontWeight: '500',
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
+        <CustomPieChart
+          data={locationDistributionData}
+          colors={TECH_COLORS}
+          width={300}
+          height={300}
+        />
 
         <ResponsiveContainer width={340} height={300}>
           <BarChart data={speedByLocationData}>
@@ -415,49 +338,12 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
       </h2>
 
       <div className='w-full flex flex-col md:flex-row justify-center items-center mb-12 gap-12 xl:gap-40'>
-        <ResponsiveContainer width={300} height={300}>
-          <PieChart>
-            <Pie
-              data={adminDistributionData}
-              labelLine={false}
-              label={{
-                position: 'inside',
-                fontSize: 12,
-                fontWeight: 'bold',
-                fill: 'white',
-              }}
-              fill='#8884d8'
-              dataKey='value'>
-              {adminDistributionData.map((_, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={TECH_COLORS[index % TECH_COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#f9fafb',
-                border: '1px solid #d1d5db',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              }}
-              formatter={(value, name) => [
-                `${value} registros (${
-                  adminDistributionData.find((item) => item.value === value)
-                    ?.percentage
-                }%)`,
-                name === 'value' ? 'Quantidade' : name,
-              ]}
-            />
-            <Legend
-              wrapperStyle={{
-                paddingTop: '20px',
-                fontWeight: '500',
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
+        <CustomPieChart
+          data={adminDistributionData}
+          colors={TECH_COLORS}
+          width={300}
+          height={300}
+        />
         <ResponsiveContainer width={340} height={300}>
           <BarChart data={speedByAdminData}>
             <CartesianGrid strokeDasharray='3 3' opacity={0.3} />
