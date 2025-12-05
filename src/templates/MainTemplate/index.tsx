@@ -5,6 +5,7 @@ import { useFilters } from '../../contexts/FiltersContext'
 import { useDatasetCsv } from '../../hooks/useDatasetCsv'
 import { useFilterDrawer } from '../../hooks/useFilterDrawer'
 import { DatasetCharts } from '../../components/DatasetChats'
+import { AppButton } from '../../components/AppButton'
 
 function MainTemplate() {
   const datasetFilePath = '/assets/csv/internet-dataset.csv'
@@ -49,14 +50,13 @@ function MainTemplate() {
           </div>
         </div>
         <div className='flex gap-3'>
-          <button
-            type='button'
+          <AppButton
+            variant='outlined'
+            icon={<i className='bi bi-arrow-counterclockwise' />}
             onClick={handleResetFilters}
-            className='flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors'
             title='Resetar todos os filtros'>
-            <i className='bi bi-arrow-counterclockwise' />
-            <span>Resetar Filtros</span>
-          </button>
+            Resetar Filtros
+          </AppButton>
           <button
             type='button'
             onClick={openDrawer}

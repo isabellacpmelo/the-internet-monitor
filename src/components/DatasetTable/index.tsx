@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import './style.css'
 import { TableHeadButton } from '../TableHeadButton'
+import { AppButton } from '../AppButton'
 import type { InternetData } from '../../types/filters'
 
 type SortableColumn = keyof InternetData
@@ -88,23 +89,20 @@ export function DatasetTable({ dataset }: DatasetTableProps) {
       </h2>
       <div className='w-full flex justify-end items-center my-4'>
         <div className='flex gap-3'>
-          <button
-            type='button'
-            onClick={downloadCSV}
-            className='flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors'>
-            <i className='bi bi-download' />
-            <span>Baixar CSV</span>
-          </button>
-          <button
-            type='button'
+          <AppButton
+            icon={<i className='bi bi-download' />}
+            onClick={downloadCSV}>
+            Baixar CSV
+          </AppButton>
+          <AppButton
+            variant='outlined'
+            icon={<i className='bi bi-arrow-counterclockwise' />}
             onClick={() => {
               setSortColumn('ID')
               setSortDirection('asc')
-            }}
-            className='flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors'>
-            <i className='bi bi-arrow-counterclockwise' />
-            <span>Resetar ordenação</span>
-          </button>
+            }}>
+            Resetar ordenação
+          </AppButton>
         </div>
       </div>
       <div className='dataset-table-container'>

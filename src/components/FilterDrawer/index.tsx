@@ -10,12 +10,7 @@ interface FilterDrawerProps {
   onReset: () => void
 }
 
-export function FilterDrawer({
-  isOpen,
-  onClose,
-  data,
-  onReset,
-}: FilterDrawerProps) {
+export function FilterDrawer({ isOpen, onClose, data }: FilterDrawerProps) {
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isOpen) {
@@ -51,14 +46,6 @@ export function FilterDrawer({
             Filtros de Dados
           </h3>
           <div className='filter-drawer-actions'>
-            <button
-              type='button'
-              onClick={onReset}
-              className='filter-reset-btn'
-              title='Resetar todos os filtros'>
-              <i className='bi bi-arrow-counterclockwise' />
-              <span>Resetar</span>
-            </button>
             <button
               type='button'
               onClick={onClose}
