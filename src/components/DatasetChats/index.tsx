@@ -138,7 +138,12 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
             <Pie
               data={technologyDistributionData}
               labelLine={false}
-              label
+              label={{
+                position: 'inside',
+                fontSize: 12,
+                fontWeight: 'bold',
+                fill: 'white',
+              }}
               fill='#8884d8'
               dataKey='value'>
               {technologyDistributionData.map((_, index) => (
@@ -271,7 +276,12 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
             <Pie
               data={locationDistributionData}
               labelLine={false}
-              label
+              label={{
+                position: 'inside',
+                fontSize: 12,
+                fontWeight: 'bold',
+                fill: 'white',
+              }}
               fill='#8884d8'
               dataKey='value'>
               {locationDistributionData.map((_, index) => (
@@ -410,7 +420,12 @@ export function DatasetCharts({ data }: DatasetChartsProps) {
             <Pie
               data={adminDistributionData}
               labelLine={false}
-              label
+              label={{
+                position: 'inside',
+                fontSize: 12,
+                fontWeight: 'bold',
+                fill: 'white',
+              }}
               fill='#8884d8'
               dataKey='value'>
               {adminDistributionData.map((_, index) => (
