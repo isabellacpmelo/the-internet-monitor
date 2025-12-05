@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useRef } from 'react'
+import { useMemo } from 'react'
 import { useFilters } from '../../contexts/FiltersContext'
 import type { InternetData } from '../../types/filters'
 import './style.css'
@@ -16,7 +16,6 @@ export function Filters({ data }: FiltersProps) {
     setLocalizacao,
     setTipoTecnologia,
     resetFilters,
-    initializeFilters,
     getFilterOptions,
   } = useFilters()
 
@@ -24,14 +23,6 @@ export function Filters({ data }: FiltersProps) {
     () => getFilterOptions(data),
     [data, getFilterOptions]
   )
-  const isInitialized = useRef(false)
-
-  useEffect(() => {
-    if (data.length > 0 && !isInitialized.current) {
-      initializeFilters(data)
-      isInitialized.current = true
-    }
-  }, [data, initializeFilters])
 
   const downloadMin = data.length > 0 ? filters.downloadRange.min : 0
   const downloadMax = data.length > 0 ? filters.downloadRange.max : 1000

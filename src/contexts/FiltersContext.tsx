@@ -1,91 +1,158 @@
-import { createContext, useContext, useState, type ReactNode } from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  type ReactNode,
+  useEffect,
+} from 'react'
 import type {
   DatasetFilters,
   FilterOptions,
   FilterRange,
   InternetData,
 } from '../types/filters'
+import { useUrlFilters } from '../hooks/useUrlFilters'
 
 interface FiltersContextType {
   filters: DatasetFilters
+  isInitialized: boolean
   setDownloadRange: (range: FilterRange) => void
   setUploadRange: (range: FilterRange) => void
   setDependenciaAdm: (values: string[]) => void
   setLocalizacao: (values: string[]) => void
   setTipoTecnologia: (values: string[]) => void
   resetFilters: (data?: InternetData[]) => void
-  initializeFilters: (data: InternetData[]) => void
   applyFilters: (data: InternetData[]) => InternetData[]
   getFilterOptions: (data: InternetData[]) => FilterOptions
 }
 
 const FiltersContext = createContext<FiltersContextType | undefined>(undefined)
 
-export function FiltersProvider({ children }: { children: ReactNode }) {
-  const [filters, setFilters] = useState<DatasetFilters>({
-    downloadRange: { min: 0, max: Infinity },
-    uploadRange: { min: 0, max: Infinity },
-    dependenciaAdm: [],
-    localizacao: [],
-    tipoTecnologia: [],
-  })
+export function FiltersProvider({
+  children,
+  data,
+}: {
+  children: ReactNode
+  data: InternetData[]
+}) {
+  function getFilterOptions(data: InternetData[]): FilterOptions {
+    if (data.length === 0) {
+      return {
+        downloadRange: { min: 0, max: 0 },
+        uploadRange: { min: 0, max: 0 },
+        dependenciaAdmOptions: [],
+        localizacaoOptions: [],
+        tipoTecnologiaOptions: [],
+      }
+    }
+    const downloadValues = data.map((item) => item.Download)
+    const uploadValues = data.map((item) => item.Upload)
+    return {
+      downloadRange: {
+        min: Math.min(...downloadValues),
+        max: Math.max(...downloadValues),
+      },
+      uploadRange: {
+        min: Math.min(...uploadValues),
+        max: Math.max(...uploadValues),
+      },
+      dependenciaAdmOptions: [
+        ...new Set(data.map((item) => item.Dependencia_Adm)),
+      ].sort(),
+      localizacaoOptions: [
+        ...new Set(data.map((item) => item.Localizacao)),
+      ].sort(),
+      tipoTecnologiaOptions: [
+        ...new Set(data.map((item) => item.Tipo_Tecnologia)),
+      ].sort(),
+    }
+  }
+  const isInitialized = data.length > 0
+  const {
+    getFiltersFromUrl,
+    updateDownloadRange: updateUrlDownloadRange,
+    updateUploadRange: updateUrlUploadRange,
+    updateDependenciaAdm: updateUrlDependenciaAdm,
+    updateLocalizacao: updateUrlLocalizacao,
+    updateTipoTecnologia: updateUrlTipoTecnologia,
+    clearUrlFilters,
+  } = useUrlFilters()
+
+  const initialFilters: DatasetFilters = (() => {
+    if (data.length > 0) {
+      const options = getFilterOptions(data)
+      return getFiltersFromUrl({
+        downloadRange: options.downloadRange,
+        uploadRange: options.uploadRange,
+        dependenciaAdm: [],
+        localizacao: [],
+        tipoTecnologia: [],
+      })
+    }
+    return {
+      downloadRange: { min: 0, max: Infinity },
+      uploadRange: { min: 0, max: Infinity },
+      dependenciaAdm: [],
+      localizacao: [],
+      tipoTecnologia: [],
+    }
+  })()
+  const [filters, setFilters] = useState<DatasetFilters>(initialFilters)
+
+  useEffect(() => {
+  }, [data, getFiltersFromUrl, filters])
 
   const setDownloadRange = (range: FilterRange) => {
     setFilters((prev) => ({ ...prev, downloadRange: range }))
+    updateUrlDownloadRange(range)
   }
 
   const setUploadRange = (range: FilterRange) => {
     setFilters((prev) => ({ ...prev, uploadRange: range }))
+    updateUrlUploadRange(range)
   }
 
   const setDependenciaAdm = (values: string[]) => {
     setFilters((prev) => ({ ...prev, dependenciaAdm: values }))
+    updateUrlDependenciaAdm(values)
   }
 
   const setLocalizacao = (values: string[]) => {
     setFilters((prev) => ({ ...prev, localizacao: values }))
+    updateUrlLocalizacao(values)
   }
 
   const setTipoTecnologia = (values: string[]) => {
     setFilters((prev) => ({ ...prev, tipoTecnologia: values }))
+    updateUrlTipoTecnologia(values)
   }
 
   const resetFilters = (data?: InternetData[]) => {
     if (data && data.length > 0) {
       const options = getFilterOptions(data)
-      setFilters({
+      const resetFilters = {
         downloadRange: options.downloadRange,
         uploadRange: options.uploadRange,
         dependenciaAdm: [],
         localizacao: [],
         tipoTecnologia: [],
-      })
+      }
+      setFilters(resetFilters)
     } else {
-      setFilters({
+      const resetFilters = {
         downloadRange: { min: 0, max: Infinity },
         uploadRange: { min: 0, max: Infinity },
         dependenciaAdm: [],
         localizacao: [],
         tipoTecnologia: [],
-      })
+      }
+      setFilters(resetFilters)
     }
-  }
-
-  const initializeFilters = (data: InternetData[]) => {
-    if (data.length > 0) {
-      const options = getFilterOptions(data)
-      setFilters({
-        downloadRange: options.downloadRange,
-        uploadRange: options.uploadRange,
-        dependenciaAdm: [],
-        localizacao: [],
-        tipoTecnologia: [],
-      })
-    }
+    clearUrlFilters()
   }
 
   const applyFilters = (data: InternetData[]): InternetData[] => {
-    return data.filter((item) => {
+    const result = data.filter((item) => {
       if (
         item.Download < filters.downloadRange.min ||
         item.Download > filters.downloadRange.max
@@ -123,54 +190,21 @@ export function FiltersProvider({ children }: { children: ReactNode }) {
 
       return true
     })
-  }
 
-  const getFilterOptions = (data: InternetData[]): FilterOptions => {
-    if (data.length === 0) {
-      return {
-        downloadRange: { min: 0, max: 0 },
-        uploadRange: { min: 0, max: 0 },
-        dependenciaAdmOptions: [],
-        localizacaoOptions: [],
-        tipoTecnologiaOptions: [],
-      }
-    }
-
-    const downloadValues = data.map((item) => item.Download)
-    const uploadValues = data.map((item) => item.Upload)
-
-    return {
-      downloadRange: {
-        min: Math.min(...downloadValues),
-        max: Math.max(...downloadValues),
-      },
-      uploadRange: {
-        min: Math.min(...uploadValues),
-        max: Math.max(...uploadValues),
-      },
-      dependenciaAdmOptions: [
-        ...new Set(data.map((item) => item.Dependencia_Adm)),
-      ].sort(),
-      localizacaoOptions: [
-        ...new Set(data.map((item) => item.Localizacao)),
-      ].sort(),
-      tipoTecnologiaOptions: [
-        ...new Set(data.map((item) => item.Tipo_Tecnologia)),
-      ].sort(),
-    }
+    return result
   }
 
   return (
     <FiltersContext.Provider
       value={{
         filters,
+        isInitialized,
         setDownloadRange,
         setUploadRange,
         setDependenciaAdm,
         setLocalizacao,
         setTipoTecnologia,
         resetFilters,
-        initializeFilters,
         applyFilters,
         getFilterOptions,
       }}>
@@ -185,6 +219,5 @@ export const useFilters = () => {
   if (!context) {
     throw new Error('UseFilters needs FiltersProvider')
   }
-
   return context
 }
